@@ -36,6 +36,20 @@ size_t heap_elementos(heap_t* heap){
     return heap->tope;
 }
 
+/*
+ * Determina si el árbol está vacío.
+ * Devuelve true si está vacío o el arbol es NULL, false si el árbol tiene elementos.
+ */
+bool heap_vacio(heap_t* heap){
+    if (!heap || heap->tope == 0) return true;
+    return false;
+}
+
+void* heap_obtener_raiz(heap_t* heap){
+    if (!heap || !heap->vector) return NULL;
+    return heap->vector[0];
+}
+
 heap_t* heap_crear(heap_comparador comparador, heap_liberar_elemento destructor){
     if (!comparador) return NULL;
     heap_t* heap = calloc(1, sizeof(heap_t));
@@ -78,6 +92,37 @@ int heap_insertar_elemento(heap_t* heap, void* elemento){
 
     sift_up(heap, heap->tope-1);
 
+    return 0;
+}
+
+void sift_down(heap_t* heap, size_t n){
+    
+
+
+}
+
+/*
+ * Elimina el elemento que se encuentra en la raiz, devulve 0 en caso de exito y -1 en caso de error.
+ */
+int heap_eliminar_raiz(heap_t* heap){
+    if (!heap || heap->tope == 0) return -1;
+
+    if (heap_elementos(heap) == 1){
+        if(heap->destructor) heap->destructor((heap->vector[0]));
+        free(heap->vector);
+        heap->vector = NULL;
+        heap->tope = 0;
+    }else{
+        void* ultimo_elemento = heap->vector[heap->tope-1];
+        void* vector_aux = realloc(heap->vector, sizeof(void*) * (heap->tope - 1));
+        if(!vector_aux) return -1;
+        heap->vector = vector_aux;
+        if(heap->destructor) heap->destructor((heap->vector[0]));
+        heap->vector[0] = ultimo_elemento;
+        (heap->tope)--;
+
+        sift_down(heap, 0);
+    }
     return 0;
 }
 

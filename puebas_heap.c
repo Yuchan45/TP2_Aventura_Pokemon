@@ -35,38 +35,33 @@ void probar_insertar_en_heap_numeros(){
     pa2m_afirmar(comparador_numeros(heap->vector[0], &b) == 0, "El elemento '5' se inserto correctamente.");
     pa2m_afirmar(comparador_numeros(heap->vector[1], &a) == 0, "El elemento '3' se inserto correctamente.");
     */
-    gimnasio_t* elemento;
     gimnasio_t* gimnasio = calloc(1, sizeof(gimnasio_t));
     gimnasio->nombre = 'A';
     gimnasio->dificultad = 10;
     pa2m_afirmar(heap_insertar_elemento(heap, gimnasio) == 0, "Puedo insertar un gimnasio en el heap. Dificultad 10.");
-    elemento = heap->vector[0];
-    pa2m_afirmar(elemento->dificultad == 10, "La dificultad del primer gimnasio del array es 10.");
+    //printf("Gimnasio: %c", ((gimnasio_t*)heap_obtener_raiz(heap))->nombre);
+    pa2m_afirmar(heap_vacio(heap) == false, "El heap ya NO se encuentra vacio.")
+    pa2m_afirmar(((gimnasio_t*)heap_obtener_raiz(heap))->dificultad == 10, "La dificultad del primer gimnasio (valor raiz) del array es 10.");
 
     gimnasio = calloc(1, sizeof(gimnasio_t));
     gimnasio->nombre = 'B';
     gimnasio->dificultad = 5;
     pa2m_afirmar(heap_insertar_elemento(heap, gimnasio) == 0, "Puedo insertar un gimnasio en el heap. Dificultad 5.");
-    elemento = heap->vector[0];
-    pa2m_afirmar(elemento->dificultad == 5, "La dificultad del primer gimnasio del array ahora es 5.");
+    pa2m_afirmar(((gimnasio_t*)heap_obtener_raiz(heap))->dificultad == 5, "La dificultad del primer gimnasio (valor raiz) del array ahora es 5.");
 
    // printf("Elemento en la primer posicion: %li\n", elemento->dificultad);
     gimnasio = calloc(1, sizeof(gimnasio_t));
     gimnasio->nombre = 'C';
     gimnasio->dificultad = 1;
     pa2m_afirmar(heap_insertar_elemento(heap, gimnasio) == 0, "Puedo insertar un gimnasio en el heap. Dificultad 1.");
-    elemento = heap->vector[0];
-    pa2m_afirmar(elemento->dificultad == 1, "La dificultad del primer gimnasio del array ahora es 1.");
-    
-   // elemento = heap->vector[0];
+    pa2m_afirmar(((gimnasio_t*)heap_obtener_raiz(heap))->dificultad == 1, "La dificultad del primer gimnasio (valor raiz) del array ahora es 1.");
+
    // printf("Elemento en la primer posicion: %li\n", elemento->dificultad);
     gimnasio = calloc(1, sizeof(gimnasio_t));
     gimnasio->nombre = 'D';
     gimnasio->dificultad = 3;
     pa2m_afirmar(heap_insertar_elemento(heap, gimnasio) == 0, "Puedo insertar un gimnasio en el heap. Dificultad 3.");
-    elemento = heap->vector[0];
-    pa2m_afirmar(elemento->dificultad == 1, "La dificultad del primer gimnasio del array sigue siendo 1.");
-   // elemento = heap->vector[0];
+    pa2m_afirmar(((gimnasio_t*)heap_obtener_raiz(heap))->dificultad == 1, "La dificultad del primer gimnasio (valor raiz) del array sigue siendo 1.");
    // printf("Elemento en la primer posicion: %li\n", elemento->dificultad);
 
 
@@ -79,8 +74,10 @@ void pruebas_heap_crear(){
     heap_t* heap = heap_crear(NULL, NULL);
 
     pa2m_afirmar(heap == NULL, "NO crea el heap si no recibe un comparador.");
+    pa2m_afirmar(heap_vacio(heap) == true, "Como el heap es NULL, el heap se encuentra vacio");
     heap = heap_crear(comparador, NULL);
     pa2m_afirmar(heap, "Crea el heap aunque no reciba destructor");
+    pa2m_afirmar(heap_vacio(heap) == true, "El heap aun se encuentra vacio");
     pa2m_afirmar(heap_elementos(heap) == 0, "Hay 0 elementos en el heap");
 
     free(heap);
