@@ -5,14 +5,14 @@
 #include <stddef.h>
 
 /*
- * Comparador de elementos. Recibe dos elementos del arbol (heap) y devuelve
+ * Comparador de elementos. Recibe dos elementos del heap y devuelve
  * 0 en caso de ser iguales, 1 si el primer elemento es menor al
  * segundo o -1 si el primer elemento es mayor al segundo.
  */
 typedef int (*heap_comparador)(void*, void*);
 
 /*
- * Destructor de elementos. Cada vez que un elemento deja el arbol (heap)
+ * Destructor de elementos. Cada vez que un elemento deja el heap
  * (    ) se invoca al destructor pasandole
  * el elemento.
  */
@@ -34,7 +34,7 @@ typedef struct heap {
 heap_t* heap_crear(heap_comparador comparador, heap_liberar_elemento destructor);
 
 /*
- * Recibe el puntero al arbol (heap) y el elemento a insertar en este.
+ * Recibe el puntero al (heap) y el elemento a insertar en este.
  * Inserta el elemento en su correspondiente posicion.
  * Devuelve 0 si el elemento se inserta correctamente o -1 en caso de error.
  */
@@ -44,7 +44,7 @@ int heap_insertar_elemento(heap_t* heap, void* elemento);
  * Devuelve el elemento que se encuentra en la raiz. En caso de un arbol maximal el elemento mayor,
  * y en caso de un arbol minimal, el elemento menor. (El elemento mayor o menor es definido por el comparador).
  */
-int heap_obtener_raiz(heap_t* heap);
+void* heap_obtener_raiz(heap_t* heap);
 
 /*
  * Elimina el elemento que se encuentra en la raiz, devulve 0 en caso de exito y -1 en caso de error.
