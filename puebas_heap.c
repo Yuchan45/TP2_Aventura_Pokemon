@@ -70,24 +70,27 @@ void probar_insertar_en_heap_numeros(){
    // printf("Elemento en la primer posicion: %li\n", elemento->dificultad);
 
 
-
     destructor_de_gimnasios(gimnasio);
     free(heap->vector);
+    free(heap);
+}
+
+void pruebas_heap_crear(){
+    heap_t* heap = heap_crear(NULL, NULL);
+
+    pa2m_afirmar(heap == NULL, "NO crea el heap si no recibe un comparador.");
+    heap = heap_crear(comparador, NULL);
+    pa2m_afirmar(heap, "Crea el heap aunque no reciba destructor");
+    pa2m_afirmar(heap_elementos(heap) == 0, "Hay 0 elementos en el heap");
+
     free(heap);
 }
 
 int main(){
 
     pa2m_nuevo_grupo("Pruebas heap crear");
-
-    heap_t* heap = heap_crear(NULL, NULL);
-
-    pa2m_afirmar(heap == NULL, "Devuelve null si no recibe comparador válido");
-    heap = heap_crear(comparador, NULL);
-    pa2m_afirmar(heap, "Crea el heap aunque no reciba destructor");
-    pa2m_afirmar(heap_elementos(heap) == 0, "Hay 0 elementos en el heap");
-
-    free(heap);
+    pruebas_heap_crear();
+    
     pa2m_nuevo_grupo("Pruebas heap insertar");
     probar_insertar_en_heap_numeros();
 }
