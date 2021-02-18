@@ -27,7 +27,6 @@ personaje_t* crear_protagonista(char ruta[100]){
         return NULL;
     }
 
-
     personaje_t personaje;
     int leidos = fscanf(archivo_protagonista, FORMATO_ENTRENADOR, personaje.nombre);
     if (leidos != 1){
@@ -38,6 +37,7 @@ personaje_t* crear_protagonista(char ruta[100]){
     printf("%s\n", personaje.nombre);
  
     /* LINEAS POKEMON */
+    pokemon_t pokemon;
     char letra = (char)fgetc(archivo_protagonista);
     printf("Letra leida: %c\n", letra);
 
@@ -46,7 +46,43 @@ personaje_t* crear_protagonista(char ruta[100]){
         fclose(archivo_protagonista);
         return NULL;
     }else{
-        
+        int leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
+        if (leidos != 4){
+            printf("Error al cargar los datos de los pokemones.\n");
+            fclose(archivo_protagonista);
+            return NULL;
+        }
+        p_pokemon = malloc(sizeof(pokemon_t));
+        if (!p_pokemon){
+            fclose(archivo_protagonista);
+            return NULL;
+        }
+        p_personaje = malloc(sizeof(personaje_t));
+        if (!p_personaje){
+            fclose(archivo_protagonista);
+            if (p_pokemon) free(p_pokemon); 
+            return NULL;
+        }
+        /* INICIALIZACION DE LOS STRUCTS EN EL HEAP. */
+        *p_pokemon = pokemon;
+        *p_personaje = personaje;
+        p_personaje->pokemon_para_combatir = lista_crear();
+        if (!p_personaje->pokemon_para_combatir){
+            if (p_pokemon) free(p_pokemon);
+            if (p_personaje) free(p_personaje);
+            fclose(archivo_protagonista);
+            return NULL;
+        }
+        p_personaje->pokemon_obtenidos = lista_crear();
+        if (!p_personaje->pokemon_obtenidos){
+            if (p_pokemon) free(p_pokemon);
+            if (p_personaje) free(p_personaje);
+            if (p_personaje->pokemon_para_combatir) lista_destruir(p_personaje->pokemon_para_combatir);
+            fclose(archivo_protagonista);
+            return NULL;
+        }
+
+
 
     }
 
