@@ -3,6 +3,8 @@
 
 #define GANO_PRIMERO 1
 #define GANO_SEGUNDO -1
+#define MAX_NOMBRE 50
+
 
 /*
  * Se deberan implementar las 5 funciones de batalla.
@@ -13,6 +15,14 @@
  * 
  * No habran empates.
  */
+
+typedef struct pokemon{
+    char nombre[MAX_NOMBRE];
+    int velocidad;
+    int defensa;
+    int ataque;
+}pokemon_t;
+
 
 int funcion_batalla_1(void* pkm_1, void* pkm_2);
 

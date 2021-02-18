@@ -5,13 +5,16 @@
 #include "lista.h"
 #include "batallas.h" //Aca esta el pokemon_t
 
+#define MAX_NOMBRE 50
+#define MAX_RUTA 100
+
 typedef struct personaje{
     char nombre[50];
-    lista_t* pokemones_equipo;
-    lista_t* pokemones_caja;
+    lista_t* pokemon_para_combatir;
+    lista_t* pokemon_obtenidos;
 }personaje_t;
 
-personaje_t* crear_personaje_princial(char ruta[100]);
+personaje_t* crear_protagonista(char ruta[MAX_RUTA]);
 
 
 

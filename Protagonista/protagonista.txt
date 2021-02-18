@@ -1,0 +1,9 @@
+E;Yuchan
+P;Typhlosion;150;150;150
+P;Pidgeotto;90;90;90
+P;Dragonite;100;100;100
+P;Tyranitar;100;100;100
+P;Lapras;90;90;90
+P;Umbreon;80;80;80
+P;Feraligatr;150;150;150
+P;Meganium;150;150;150
