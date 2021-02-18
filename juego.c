@@ -38,7 +38,7 @@ personaje_t* crear_protagonista(char ruta[100]){
  
     /* LINEAS POKEMON */
     pokemon_t pokemon;
-    char letra = (char)fgetc(archivo_protagonista);
+    letra = (char)fgetc(archivo_protagonista);
     printf("Letra leida: %c\n", letra);
 
     if (letra != POKEMON){
@@ -46,12 +46,14 @@ personaje_t* crear_protagonista(char ruta[100]){
         fclose(archivo_protagonista);
         return NULL;
     }else{
-        int leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
+        leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
         if (leidos != 4){
             printf("Error al cargar los datos de los pokemones.\n");
             fclose(archivo_protagonista);
             return NULL;
         }
+        //printf("POKEMON: %s, VEL: %i, ATK: %i, DEF: %i\n", pokemon.nombre, pokemon.velocidad, pokemon.ataque, pokemon.defensa);
+        
         p_pokemon = malloc(sizeof(pokemon_t));
         if (!p_pokemon){
             fclose(archivo_protagonista);
@@ -60,30 +62,64 @@ personaje_t* crear_protagonista(char ruta[100]){
         p_personaje = malloc(sizeof(personaje_t));
         if (!p_personaje){
             fclose(archivo_protagonista);
-            if (p_pokemon) free(p_pokemon); 
+            //if (p_pokemon) free(p_pokemon); 
+            free(p_pokemon);
             return NULL;
         }
-        /* INICIALIZACION DE LOS STRUCTS EN EL HEAP. */
+        /* INICIALIZACION DE LA ESTRUCTURA (Y agregando el 1º pkmn)*/
+        
         *p_pokemon = pokemon;
         *p_personaje = personaje;
         p_personaje->pokemon_para_combatir = lista_crear();
         if (!p_personaje->pokemon_para_combatir){
-            if (p_pokemon) free(p_pokemon);
-            if (p_personaje) free(p_personaje);
+            //if (p_pokemon) free(p_pokemon);
+            //if (p_personaje) free(p_personaje);
+            free(p_pokemon);
+            free(p_personaje);
             fclose(archivo_protagonista);
             return NULL;
         }
         p_personaje->pokemon_obtenidos = lista_crear();
         if (!p_personaje->pokemon_obtenidos){
-            if (p_pokemon) free(p_pokemon);
-            if (p_personaje) free(p_personaje);
+            //if (p_pokemon) free(p_pokemon);
+            //if (p_personaje) free(p_personaje);
+            free(p_pokemon);
             if (p_personaje->pokemon_para_combatir) lista_destruir(p_personaje->pokemon_para_combatir);
+            free(p_personaje);
             fclose(archivo_protagonista);
             return NULL;
         }
 
+        printf("Agrego a la lista de obtenidos: %s\n", p_pokemon->nombre);
+        lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
+        p_pokemon = NULL;
+
+        /* AGREGAR EL RESTO DE LOS POKEMONS */
+
+        letra = (char)fgetc(archivo_protagonista);
+        bool error = false;
+        while (letra == POKEMON && !error){
+            leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
+            if (leidos != 4){
+                printf("entre aca1\n");
+                error = true;
+            } else{
+                p_pokemon = malloc(sizeof(pokemon_t));
+                if (!p_pokemon){
+                    printf("entre aca2\n");
+                    error = true;
+                }else{
+                    *p_pokemon = pokemon;
+                    printf("Agrego a la lista de obtenidos: %s\n", p_pokemon->nombre);
+                    lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
+                    p_pokemon = NULL;
+                }
+            }
+        }
+        
 
 
+        return p_personaje;
     }
 
 

@@ -1,6 +1,7 @@
 #ifndef __JUEGO_H__
 #define __JUEGO_H__
 
+#include "stdlib.h"
 #include "heap.h"
 #include "lista.h"
 #include "batallas.h" //Aca esta el pokemon_t
