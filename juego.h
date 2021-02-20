@@ -17,7 +17,15 @@ typedef struct personaje{
 
 personaje_t* crear_protagonista(char ruta[MAX_RUTA]);
 
+/*
+ * Recibe un pokemon y se encarga de liberarlo.
+ */
+void pokemon_destruir(pokemon_t* pokemon);
 
+/*
+ * Recibe un personaje protagonista (NO ENTRENADOR) y se encarga de liberar toda la memoria que utiliza.
+ */
+void protagonista_destruir(personaje_t* personaje);
 
 
 

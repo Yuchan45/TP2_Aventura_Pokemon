@@ -19,7 +19,7 @@ personaje_t* crear_protagonista(char ruta[100]){
     }
     /* PERSONAJE */
     char letra = (char)fgetc(archivo_protagonista);
-    printf("Letra leida: %c\n", letra);
+    //printf("Letra leida: %c\n", letra);
     
     if (letra != ENTRENADOR){
         printf("Error al cargar el protagonista. Letra inicial invalida.\n");
@@ -34,12 +34,12 @@ personaje_t* crear_protagonista(char ruta[100]){
         fclose(archivo_protagonista);
         return NULL;
     }
-    printf("%s\n", personaje.nombre);
+    printf("Entrenador: %s\n\n", personaje.nombre);
  
-    /* LINEAS POKEMON */
+    /* ENCUENTRO PRIMER POKEMON */
     pokemon_t pokemon;
     letra = (char)fgetc(archivo_protagonista);
-    printf("Letra leida: %c\n", letra);
+    //printf("Letra leida: %c\n", letra);
 
     if (letra != POKEMON){
         printf("Error al cargar los pokemones del protagonista.\n");
@@ -90,41 +90,62 @@ personaje_t* crear_protagonista(char ruta[100]){
             return NULL;
         }
 
-        printf("Agrego a la lista de obtenidos: %s\n", p_pokemon->nombre);
+        printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
         lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
         p_pokemon = NULL;
+    }
+    /* AGREGAR EL RESTO DE LOS POKEMONS */
 
-        /* AGREGAR EL RESTO DE LOS POKEMONS */
-
-        letra = (char)fgetc(archivo_protagonista);
-        bool error = false;
-        while (letra == POKEMON && !error){
-            leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
-            if (leidos != 4){
-                printf("entre aca1\n");
+    letra = (char)fgetc(archivo_protagonista);
+    bool error = false;
+    while (letra == POKEMON && !error){
+        leidos = fscanf(archivo_protagonista, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
+        if (leidos != 4){
+            error = true;
+        } else{
+            p_pokemon = malloc(sizeof(pokemon_t));
+            if (!p_pokemon){
                 error = true;
-            } else{
-                p_pokemon = malloc(sizeof(pokemon_t));
-                if (!p_pokemon){
-                    printf("entre aca2\n");
-                    error = true;
-                }else{
-                    *p_pokemon = pokemon;
-                    printf("Agrego a la lista de obtenidos: %s\n", p_pokemon->nombre);
-                    lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
-                    p_pokemon = NULL;
-                }
+            }else{
+                *p_pokemon = pokemon;
+                printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
+                lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
+                p_pokemon = NULL;
             }
         }
-        
-
-
-        return p_personaje;
+        if (!error) letra = (char)fgetc(archivo_protagonista);
+    }
+    
+    lista_iterador_t* iterador = lista_iterador_crear(p_personaje->pokemon_obtenidos);
+    printf("\nRecorro la lista de pokemones obtenidos del entrenador usando el iterador externo: \n");
+    while (lista_iterador_tiene_siguiente(iterador) && (lista_elementos(p_personaje->pokemon_para_combatir) < 6)){
+        printf(" -Agrego al pokemon: %s a la party de combate\n", (char*)(lista_iterador_elemento_actual(iterador)));
+        lista_insertar(p_personaje->pokemon_para_combatir, lista_iterador_elemento_actual(iterador));
+        lista_iterador_avanzar(iterador);
     }
 
-
-
-
-
-    return NULL;
+    lista_iterador_destruir(iterador);
+    fclose(archivo_protagonista);
+    printf("pokemon party: %li\n", lista_elementos(p_personaje->pokemon_para_combatir));
+    printf("pokemon obtenidos: %li\n", lista_elementos(p_personaje->pokemon_obtenidos));
+    return p_personaje;
 }
+
+
+void pokemon_destruir(pokemon_t* pokemon){
+    if (!pokemon) return;
+    free(pokemon);
+}
+
+void protagonista_destruir(personaje_t* personaje){
+    if (!personaje) return;
+    while (!lista_vacia(personaje->pokemon_obtenidos)){
+        pokemon_destruir(lista_ultimo(personaje->pokemon_obtenidos));
+        lista_borrar(personaje->pokemon_obtenidos); //El lista_borrar borra el elemento en la ultima posicion;
+    }
+    lista_destruir(personaje->pokemon_obtenidos);
+    lista_destruir(personaje->pokemon_para_combatir);
+    free(personaje);
+}
+
+
