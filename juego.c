@@ -242,6 +242,8 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
     p_gimnasio->lider = p_entrenador_lider;
 
     p_gimnasio->lider->pokemones = lista_crear();
+    p_gimnasio->entrenadores = lista_crear();
+
     if (!(p_gimnasio->lider->pokemones)){
         free(p_gimnasio);
         free(p_entrenador_lider);
@@ -273,14 +275,56 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         }
         if (!error) letra = (char)fgetc(archivo_gimnasio);
     }
+    printf("\n\n-CARGA DE LIDER COMPLETADA-\n");
+    /*paso a leer el resto de los trainers*/
 
+    if (letra != ENTRENADOR){
+        printf("Error al cargar entrenador en gimnasio.\n");
+        fclose(archivo_gimnasio);
+        return NULL;
+    }
+    printf("LEEETRAA: %c\n", letra);
     
+    entrenador_t entrenador;
+    leidos = fscanf(archivo_gimnasio, FORMATO_ENTRENADOR, entrenador.nombre);
+    if (leidos != 1){
+        printf("Error de formato al cargar entrenador de gimnasio.\n");
+        fclose(archivo_gimnasio);
+        return NULL;
+    }
 
+    letra = (char)fgetc(archivo_gimnasio);
+    if (letra != POKEMON){
+        printf("Error. Deberia encontrar un pokemon, no otro entrenador o lo que sea.\n");
+        fclose(archivo_gimnasio);
+        return NULL;
+    }
+
+    pokemon_t pokemon;
+    leidos = fscanf(archivo_gimnasio, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
+    if (leidos != 4){
+        printf("Error\n");
+        fclose(archivo_gimnasio);
+        return NULL;
+    }
+
+    entrenador_t* p_entrenador = malloc(sizeof(entrenador_t));
+    if (!p_entrenador){
+        printf("Error al crear el entrenador de gimnasio en el heap. Devuelvo hasta lo que llegue a cargar.");
+        return p_gimnasio;
+    }
+    pokemon_t* p_pokemon = malloc(sizeof(pokemon_t));
+    if (!p_entrenador){
+        free(p_entrenador);
+        printf("Error al crear el entrenador de gimnasio en el heap. Devuelvo hasta lo que llegue a cargar.");
+        return p_gimnasio;
+    }
 
 
 
 
     /****** VERIFICO QUE SE HAYA CARGADO CORRECTAMENTE *******/
+    printf("\n\n/*******VERIFICACION*******/\n");
     printf("GIMNASIO: %s\nLIDER: %s\nDIFICULTAD: %i, PUNTERO_COMBATE: %i\n", p_gimnasio->nombre, p_gimnasio->lider->nombre, p_gimnasio->dificultad, p_gimnasio->puntero_a_combate);
 
     lista_iterador_t* iterador = lista_iterador_crear(p_gimnasio->lider->pokemones);
