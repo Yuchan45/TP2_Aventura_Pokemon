@@ -6,16 +6,32 @@
 #include "lista.h"
 #include "batallas.h" //Aca esta el pokemon_t
 
-#define MAX_NOMBRE 50
-#define MAX_RUTA 100
+#define MAX_NOMBRE 80
+#define MAX_RUTA 150
 
 typedef struct personaje{
-    char nombre[50];
+    char nombre[MAX_NOMBRE];
     lista_t* pokemon_para_combatir;
     lista_t* pokemon_obtenidos;
 }personaje_t;
 
-personaje_t* crear_protagonista(char ruta[MAX_RUTA]);
+typedef struct entrenador{
+    char nombre[MAX_NOMBRE];
+    lista_t* pokemones;
+}entrenador_t;
+
+typedef struct gimnasio{
+    char nombre[MAX_NOMBRE];
+    int dificultad;
+    int puntero_a_combate;
+    entrenador_t* lider;
+    lista_t* entrenadores; //Pila de entrenadores.
+}gimnasio_t;
+
+
+gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]);
+
+personaje_t* protagonista_crear(char ruta[MAX_RUTA]);
 
 /*
  * Recibe un pokemon y se encarga de liberarlo.
