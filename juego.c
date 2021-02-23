@@ -14,8 +14,6 @@
 
 
 personaje_t* protagonista_crear(char ruta[100]){
-    pokemon_t* p_pokemon;
-    personaje_t* p_personaje;
 
     FILE* archivo_protagonista = fopen(ruta, "r");
     if (!archivo_protagonista){
@@ -23,11 +21,11 @@ personaje_t* protagonista_crear(char ruta[100]){
         return NULL;
     }
     /* PERSONAJE */
+    pokemon_t* p_pokemon = NULL;
+    personaje_t* p_personaje = NULL;
+
     char letra = (char)fgetc(archivo_protagonista);
-    //printf("Letra leida: %c\n", letra);
-    
     if (letra != ENTRENADOR){
-        //printf("Error al cargar el protagonista. Letra inicial invalida.\n");
         fclose(archivo_protagonista);
         return NULL;
     }
@@ -35,11 +33,10 @@ personaje_t* protagonista_crear(char ruta[100]){
     personaje_t personaje;
     int leidos = fscanf(archivo_protagonista, FORMATO_ENTRENADOR, personaje.nombre);
     if (leidos != 1){
-        printf("Error al cargar el nombre del protagonista.\n");
         fclose(archivo_protagonista);
         return NULL;
     }
-    //printf("Protagonista: %s\n\n", personaje.nombre);
+
  
     /* ENCUENTRO PRIMER POKEMON */
     pokemon_t pokemon;
@@ -47,7 +44,7 @@ personaje_t* protagonista_crear(char ruta[100]){
     //printf("Letra leida: %c\n", letra);
 
     if (letra != POKEMON){
-        printf("Error al cargar los pokemones del protagonista.\n");
+        //printf("Error al cargar los pokemones del protagonista.\n");
         fclose(archivo_protagonista);
         return NULL;
     }else{
@@ -61,6 +58,7 @@ personaje_t* protagonista_crear(char ruta[100]){
         
         p_pokemon = malloc(sizeof(pokemon_t));
         if (!p_pokemon){
+            //printf("ERRRORRRRRR\n\n\n");
             fclose(archivo_protagonista);
             return NULL;
         }
@@ -131,8 +129,8 @@ personaje_t* protagonista_crear(char ruta[100]){
     }
 
     /*  AGREGO A LOS PKMN A LA LISTA DE EQUIPO */
+    
     lista_iterador_t* iterador = lista_iterador_crear(p_personaje->pokemon_obtenidos);
-    //printf("\nRecorro la lista de pokemones obtenidos del entrenador usando el iterador externo: \n");
     while (lista_iterador_tiene_siguiente(iterador) && (lista_elementos(p_personaje->pokemon_para_combatir) < MAX_EQUIPO)){ 
         //printf(" -Agrego al pokemon: %s a la party de combate\n", (char*)(lista_iterador_elemento_actual(iterador)));
         lista_insertar(p_personaje->pokemon_para_combatir, lista_iterador_elemento_actual(iterador));
@@ -140,29 +138,12 @@ personaje_t* protagonista_crear(char ruta[100]){
     }
 
     lista_iterador_destruir(iterador);
+    
     //printf("pokemon party: %li\n", lista_elementos(p_personaje->pokemon_para_combatir));
     //printf("pokemon obtenidos: %li\n", lista_elementos(p_personaje->pokemon_obtenidos));
     fclose(archivo_protagonista);
     return p_personaje;
 }
-
-
-void pokemon_destruir(pokemon_t* pokemon){
-    if (!pokemon) return;
-    free(pokemon);
-}
-
-void protagonista_destruir(personaje_t* personaje){
-    if (!personaje) return;
-    while (!lista_vacia(personaje->pokemon_obtenidos)){
-        pokemon_destruir(lista_ultimo(personaje->pokemon_obtenidos));
-        lista_borrar(personaje->pokemon_obtenidos); //El lista_borrar borra el elemento en la ultima posicion;
-    }
-    lista_destruir(personaje->pokemon_obtenidos);
-    lista_destruir(personaje->pokemon_para_combatir);
-    free(personaje);
-}
-
 
 gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
 
@@ -184,7 +165,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
     gimnasio_t gimnasio;
     int leidos = fscanf(archivo_gimnasio, FORMATO_GIMNASIO, gimnasio.nombre, &(gimnasio.dificultad), &(gimnasio.puntero_a_combate));
     if (leidos != 3){
-        printf("Eroor\n");
+        //printf("Error\n");
         fclose(archivo_gimnasio);
         return NULL;
     }
@@ -192,7 +173,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
 
     letra = (char)fgetc(archivo_gimnasio);
     if (letra != LIDER){
-        printf("Error al cargar el gimnasio.\n");
+        printf("Error al cargar el lider de gimnasio.\n");
         fclose(archivo_gimnasio);
         return NULL;
     }
@@ -200,26 +181,24 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
     entrenador_t entrenador_lider;
     leidos = fscanf(archivo_gimnasio, FORMATO_ENTRENADOR, entrenador_lider.nombre);
     if (leidos != 1){
-        printf("ErRor\n");
+        printf("Error al cargar el lider de gimnasio. Mas de 1 dato de entrada.\n");
         fclose(archivo_gimnasio);
         return NULL;
     }
-    //printf("LIDER: %s\n", entrenador_lider.nombre);
 
     letra = (char)fgetc(archivo_gimnasio);
     if (letra != POKEMON){
-        printf("Error al cargar el gimnasio.\n");
+        printf("Error al cargar el pokemon del lider de gimnasio.\n");
         fclose(archivo_gimnasio);
         return NULL;
     }
     pokemon_t pokemon;
     leidos = fscanf(archivo_gimnasio, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
     if (leidos != 4){
-        printf("Error\n");
+        printf("Error al cargar los dartos del pokemon del lider\n");
         fclose(archivo_gimnasio);
         return NULL;
     }
-    //printf("%s, vel: %i, atk: %i, def: %i\n", pokemon.nombre, pokemon.velocidad, pokemon.ataque, pokemon.defensa);
     
 
     /* CREO LOS STRUTS EN EL HEAP */
@@ -266,7 +245,6 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
 
     /*   AGREGO AL RESTO DE LOS PKMN   */
     letra = (char)fgetc(archivo_gimnasio);
-    //printf("LETRAAAAAAAAAAAAA: %c\n\n\n", letra);
     bool error = false;
     while (letra == POKEMON && !error){
         leidos = fscanf(archivo_gimnasio, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
@@ -289,16 +267,16 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
 
 
     /*paso a leer el resto de los trainers*/
-    entrenador_t* p_entrenador;
-    while(letra == ENTRENADOR){
-    /* NO necesariamente porque quiza hay un gimnasio sin entrenadoires, solo LIDER.
     if (letra != ENTRENADOR){
         printf("Error al cargar entrenador en gimnasio.\n");
+        gimnasio_destruir(p_gimnasio);
         fclose(archivo_gimnasio);
         return NULL;
-    }*/
-        //printf("LEEETRAA: %c\n", letra);
-        
+    }
+
+    entrenador_t* p_entrenador;
+    while(letra == ENTRENADOR){
+    /* NO necesariamente porque quiza hay un gimnasio sin entrenadoires, solo LIDER?*/    
         entrenador_t entrenador;
         leidos = fscanf(archivo_gimnasio, FORMATO_ENTRENADOR, entrenador.nombre);
         if (leidos != 1){
@@ -309,7 +287,8 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
 
         letra = (char)fgetc(archivo_gimnasio);
         if (letra != POKEMON){
-            printf("Error. Deberia encontrar un pokemon, no otro entrenador o lo que sea.\n");
+            printf("Error. Deberia encontrar un pokemon para el entrenador.\n");
+            gimnasio_destruir(p_gimnasio);
             fclose(archivo_gimnasio);
             return NULL;
         }
@@ -318,6 +297,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         leidos = fscanf(archivo_gimnasio, FORMATO_POKEMON, pokemon.nombre, &(pokemon.velocidad), &(pokemon.ataque), &(pokemon.defensa));
         if (leidos != 4){
             printf("Error\n");
+            gimnasio_destruir(p_gimnasio);
             fclose(archivo_gimnasio);
             return NULL;
         }
@@ -325,13 +305,14 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         p_entrenador = malloc(sizeof(entrenador_t));
         if (!p_entrenador){
             printf("Error al crear el entrenador de gimnasio en el heap. Devuelvo hasta lo que llegue a cargar.");
+            gimnasio_destruir(p_gimnasio);
             return p_gimnasio;
         }
         
         p_pokemon = malloc(sizeof(pokemon_t));
         if (!p_entrenador){
-            free(p_entrenador);
             printf("Error al crear el entrenador de gimnasio en el heap. Devuelvo hasta lo que llegue a cargar.");
+            gimnasio_destruir(p_gimnasio);
             return p_gimnasio;
         }
         
@@ -339,8 +320,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         *p_pokemon = pokemon;
         p_entrenador->pokemones = lista_crear();
         if (!(p_entrenador->pokemones)){
-            free(p_entrenador);
-            free(p_pokemon);
+            gimnasio_destruir(p_gimnasio);
             fclose(archivo_gimnasio);
         }
 
@@ -378,4 +358,85 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
     fclose(archivo_gimnasio);
 
     return p_gimnasio;
+}
+
+
+void pokemon_destruir(pokemon_t* pokemon){
+    if (!pokemon) return;
+    free(pokemon);
+}
+
+void protagonista_destruir(personaje_t* personaje){
+    if (!personaje) return;
+    pokemon_t* pokemon;
+    while (!lista_vacia(personaje->pokemon_obtenidos)){
+        pokemon = lista_ultimo(personaje->pokemon_obtenidos);
+        pokemon_destruir(pokemon);
+        lista_borrar(personaje->pokemon_obtenidos); //El lista_borrar borra el elemento en la ultima posicion;
+    }
+    lista_destruir(personaje->pokemon_obtenidos);
+    lista_destruir(personaje->pokemon_para_combatir);
+    free(personaje);
+}
+
+
+void entrenador_destruir(entrenador_t* entrenador){
+    if (!entrenador) return;
+    pokemon_t* pokemon;
+    while(!lista_vacia(entrenador->pokemones)){
+        pokemon = lista_ultimo(entrenador->pokemones);
+        pokemon_destruir(pokemon);
+        lista_borrar(entrenador->pokemones); //El lista_borrar borra el elemento en la ultima posicion;
+    } 
+    lista_destruir(entrenador->pokemones);
+    free(entrenador);
+}
+
+void entrenadores_destruir(lista_t* lista_entrenadores){
+    if (!lista_entrenadores) return;
+    entrenador_t* entrenador;
+
+    while(!lista_vacia(lista_entrenadores)){
+        entrenador = lista_ultimo(lista_entrenadores);
+        entrenador_destruir(entrenador); 
+        lista_borrar(lista_entrenadores); //El lista_borrar borra el elemento en la ultima posicion;
+    }
+    lista_destruir(lista_entrenadores);
+}
+
+void gimnasio_destruir(gimnasio_t* gimnasio){
+    if (!gimnasio) return;
+
+    entrenador_destruir(gimnasio->lider);
+    entrenadores_destruir(gimnasio->entrenadores);
+
+    free(gimnasio);    
+}
+
+int insertar_gimnasio(heap_t* heap_gimnasios){
+    printf("Ingrese la ruta del archivo del gimnasio que desea agregar: ");
+    char ruta[MAX_RUTA];
+    scanf(" %s", ruta);
+    gimnasio_t* gimnasio = gimnasio_crear(ruta);
+    if (!gimnasio) return -1;
+    if (heap_insertar_elemento(heap_gimnasios, gimnasio) == 0){
+        printf("%s ha sido añadido con exitosamente.\n", gimnasio->nombre);
+        return 0;
+    }
+    printf("Error al insertar gimnasio en el heap.\n");
+    return -1;
+}
+
+int agregar_personaje(juego_t* juego){
+    printf("Ingrese la ruta del archivo del protagonista que desea cargar: ");
+    char ruta[MAX_RUTA];
+    scanf(" %s", ruta);
+    personaje_t* personaje = personaje_principal_crear(ruta);
+    if (!personaje){
+        printf("Error al cargar el protagonista.\n");
+        return -1;
+    } 
+
+    juego->personaje_principal = personaje;
+    return 0;
 }

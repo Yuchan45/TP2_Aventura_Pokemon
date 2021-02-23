@@ -1,12 +1,3 @@
-G;Gimnasio de Ciudad Celeste;1;1
-L;Misty
-P;Staryu;50;40;30
-P;Starmie;80;60;60
-E;Dominguera Diana
-P;Goldeen;30;40;20
-E;Nadador Luis
-P;Horsea;35;30;20
-P;Shellder;20;25;40
 G;Gimnasio de Ciudad Plateada;2;2
 L;Brock
 P;Onix;30;40;60
@@ -15,4 +6,12 @@ E;Campista Jordan
 P;Sandshrew;20;30;40
 E;Montañero Belino
 P;Digglet;35;30;30
-P;Geodude;20;25;3
+P;Geodude;20;25;3G;Gimnasio de Ciudad Celeste;1;1
+L;Misty
+P;Staryu;50;40;30
+P;Starmie;80;60;60
+E;Dominguera Diana
+P;Goldeen;30;40;20
+E;Nadador Luis
+P;Horsea;35;30;20
+P;Shellder;20;25;40
