@@ -27,7 +27,7 @@ personaje_t* protagonista_crear(char ruta[100]){
     //printf("Letra leida: %c\n", letra);
     
     if (letra != ENTRENADOR){
-        printf("Error al cargar el protagonista. Letra inicial invalida.\n");
+        //printf("Error al cargar el protagonista. Letra inicial invalida.\n");
         fclose(archivo_protagonista);
         return NULL;
     }
@@ -39,7 +39,7 @@ personaje_t* protagonista_crear(char ruta[100]){
         fclose(archivo_protagonista);
         return NULL;
     }
-    printf("Protagonista: %s\n\n", personaje.nombre);
+    //printf("Protagonista: %s\n\n", personaje.nombre);
  
     /* ENCUENTRO PRIMER POKEMON */
     pokemon_t pokemon;
@@ -67,7 +67,7 @@ personaje_t* protagonista_crear(char ruta[100]){
         p_personaje = malloc(sizeof(personaje_t));
         if (!p_personaje){
             fclose(archivo_protagonista);
-            //if (p_pokemon) free(p_pokemon); 
+            if (p_pokemon) free(p_pokemon); 
             free(p_pokemon);
             return NULL;
         }
@@ -95,7 +95,7 @@ personaje_t* protagonista_crear(char ruta[100]){
             return NULL;
         }
 
-        printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
+        //printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
         lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
         p_pokemon = NULL;
     }
@@ -113,26 +113,36 @@ personaje_t* protagonista_crear(char ruta[100]){
                 error = true;
             }else{
                 *p_pokemon = pokemon;
-                printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
+                //printf("Agrego a la lista de obtenidos a: %s\n", p_pokemon->nombre);
                 lista_insertar(p_personaje->pokemon_obtenidos, p_pokemon);
                 p_pokemon = NULL;
             }
         }
         if (!error) letra = (char)fgetc(archivo_protagonista);
     }
-    
+
+    if (error){
+        printf("Error al cargar los pokemones del protagonista.\n");
+        if(p_pokemon) free(p_pokemon); 
+        if(p_personaje && p_personaje->pokemon_obtenidos) lista_destruir(p_personaje->pokemon_obtenidos);
+        if(p_personaje) free(p_personaje); 
+        fclose(archivo_protagonista);
+        return NULL;
+    }
+
+    /*  AGREGO A LOS PKMN A LA LISTA DE EQUIPO */
     lista_iterador_t* iterador = lista_iterador_crear(p_personaje->pokemon_obtenidos);
-    printf("\nRecorro la lista de pokemones obtenidos del entrenador usando el iterador externo: \n");
-    while (lista_iterador_tiene_siguiente(iterador) && (lista_elementos(p_personaje->pokemon_para_combatir) < 6)){
-        printf(" -Agrego al pokemon: %s a la party de combate\n", (char*)(lista_iterador_elemento_actual(iterador)));
+    //printf("\nRecorro la lista de pokemones obtenidos del entrenador usando el iterador externo: \n");
+    while (lista_iterador_tiene_siguiente(iterador) && (lista_elementos(p_personaje->pokemon_para_combatir) < MAX_EQUIPO)){ 
+        //printf(" -Agrego al pokemon: %s a la party de combate\n", (char*)(lista_iterador_elemento_actual(iterador)));
         lista_insertar(p_personaje->pokemon_para_combatir, lista_iterador_elemento_actual(iterador));
         lista_iterador_avanzar(iterador);
     }
 
     lista_iterador_destruir(iterador);
+    //printf("pokemon party: %li\n", lista_elementos(p_personaje->pokemon_para_combatir));
+    //printf("pokemon obtenidos: %li\n", lista_elementos(p_personaje->pokemon_obtenidos));
     fclose(archivo_protagonista);
-    printf("pokemon party: %li\n", lista_elementos(p_personaje->pokemon_para_combatir));
-    printf("pokemon obtenidos: %li\n", lista_elementos(p_personaje->pokemon_obtenidos));
     return p_personaje;
 }
 
@@ -275,7 +285,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         }
         if (!error) letra = (char)fgetc(archivo_gimnasio);
     }
-    printf("\n\n-CARGA DE LIDER COMPLETADA-\n");
+    //printf("\n\n-CARGA DE LIDER COMPLETADA-\n");
 
 
     /*paso a leer el resto de los trainers*/
@@ -287,7 +297,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         fclose(archivo_gimnasio);
         return NULL;
     }*/
-        printf("LEEETRAA: %c\n", letra);
+        //printf("LEEETRAA: %c\n", letra);
         
         entrenador_t entrenador;
         leidos = fscanf(archivo_gimnasio, FORMATO_ENTRENADOR, entrenador.nombre);
@@ -363,7 +373,7 @@ gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]){
         p_entrenador = NULL;
 
     }
-    printf("\n\n-CARGA DE ENTRENADORES DEL GIMNASIO COMPLETADA-\n");
+    //printf("\n\n-CARGA DE ENTRENADORES DEL GIMNASIO COMPLETADA-\n");
 
     fclose(archivo_gimnasio);
 

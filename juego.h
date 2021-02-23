@@ -8,6 +8,7 @@
 
 #define MAX_NOMBRE 80
 #define MAX_RUTA 150
+#define MAX_EQUIPO 6
 
 typedef struct personaje{
     char nombre[MAX_NOMBRE];
