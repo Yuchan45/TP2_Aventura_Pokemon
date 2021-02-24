@@ -3,7 +3,6 @@
 
 #define GANO_PRIMERO 1
 #define GANO_SEGUNDO -1
-#define MAX_NOMBRE 80
 
 
 /*

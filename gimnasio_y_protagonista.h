@@ -1,15 +1,16 @@
-#ifndef __GIMNASIOS_Y_PROTAGONISTA_H__
-#define __GIMNASIOS_Y_PROTAGONISTA_H__
+#ifndef __GIMNASIO_Y_PROTAGONISTA_H__
+#define __GIMNASIO_Y_PROTAGONISTA_H__
 
 #include "stdlib.h"
 #include "heap.h"
 #include "lista.h"
-#include "batallas.h" 
 #include "pokemon_y_combate.h"
+#include "batallas.h" 
 
 #define MAX_NOMBRE 80
 #define MAX_RUTA 150
 #define MAX_EQUIPO 6
+#define MAX_BATALLAS 5
 
 
 typedef struct personaje{
@@ -35,6 +36,7 @@ typedef struct juego{
     personaje_t* protagonista;
     heap_t* gimnasios;
     bool simular;
+    //funcion_batalla id_batalla[MAX_BATALLAS]
 }juego_t;
 
 /*
@@ -95,4 +97,4 @@ void gimnasio_mostrar(gimnasio_t* gimnasio);
  */
 void protagonista_mostrar(personaje_t* protagonista);
 
-#endif /* GIMNASIOS_Y_PROTAGONISTA */
+#endif /* GIMNASIO_Y_PROTAGONISTA */
