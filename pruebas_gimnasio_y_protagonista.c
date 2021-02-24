@@ -1,5 +1,5 @@
 #include <string.h>
-#include "juego.h"
+#include "gimnasio_y_protagonista.h"
 #include "pa2mm.h"
 
 
@@ -105,9 +105,21 @@ void pruebas_gimnasio_destruir(){
     gimnasio_destruir(gimnasio);
 }
 
+void pruebas_gimnasio_mostrar(){
+    gimnasio_t* gimnasio = gimnasio_crear("Gimnasios/gimnasio_1.txt");
+    gimnasio_mostrar(gimnasio);
+    gimnasio_destruir(gimnasio);
+}
 
+
+void pruebas_protagonista_mostrar(){
+    personaje_t* protagonista = protagonista_crear("Protagonista/protagonista.txt");
+    protagonista_mostrar(protagonista);
+    protagonista_destruir(protagonista);
+}
 
 int main(){
+    
     pa2m_nuevo_grupo("PRUEBAS PROTAGONISTA_CREAR()");
     pruebas_protagonista_crear();
 
@@ -116,6 +128,12 @@ int main(){
 
     pa2m_nuevo_grupo("PRUEBAS GIMNASIO_DESTRUIR()");
     pruebas_gimnasio_destruir();
+    
+    pa2m_nuevo_grupo("PRUEBAS GIMNASIO_MOSTRAR()");
+    pruebas_gimnasio_mostrar();
+    
+    pa2m_nuevo_grupo("PRUEBAS PROTAGONISTA_MOSTRAR()");
+    pruebas_protagonista_mostrar();
 
     
 }

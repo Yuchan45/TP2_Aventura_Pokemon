@@ -16,12 +16,6 @@
  * No habran empates.
  */
 
-typedef struct pokemon{
-    char nombre[MAX_NOMBRE];
-    int velocidad;
-    int defensa;
-    int ataque;
-}pokemon_t;
 
 
 int funcion_batalla_1(void* pkm_1, void* pkm_2);

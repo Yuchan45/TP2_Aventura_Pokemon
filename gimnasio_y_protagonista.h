@@ -1,21 +1,16 @@
-#ifndef __JUEGO_H__
-#define __JUEGO_H__
+#ifndef __GIMNASIOS_Y_PROTAGONISTA_H__
+#define __GIMNASIOS_Y_PROTAGONISTA_H__
 
 #include "stdlib.h"
 #include "heap.h"
 #include "lista.h"
-#include "batallas.h" //Aca esta el pokemon_t
+#include "batallas.h" 
+#include "pokemon_y_combate.h"
 
 #define MAX_NOMBRE 80
 #define MAX_RUTA 150
 #define MAX_EQUIPO 6
 
-typedef struct juego{
-    
-    personaje_t* personaje_principal;
-    heap_t* gimnasios;
-    bool simular;
-}juego_t;
 
 typedef struct personaje{
     char nombre[MAX_NOMBRE];
@@ -36,10 +31,33 @@ typedef struct gimnasio{
     lista_t* entrenadores; //Pila de entrenadores.
 }gimnasio_t;
 
+typedef struct juego{
+    personaje_t* protagonista;
+    heap_t* gimnasios;
+    bool simular;
+}juego_t;
 
+/*
+ * Crea un gimnasio a partir de la ruta de un archivo que recibe por parametro. DEvuelve el puntero al gimnasio creado
+ */
 gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]);
 
+/*
+ * Solicita la ruta del archivo gimnasio, para luego crearlo junto con la funcion gimnasio_crear(). 
+ * Y luego lo inserta un gimnasio en un heap recibido por parametro.
+ */
+int insertar_gimnasio(heap_t* heap_gimnasios);
+
+/*
+ * Crea un protagonista a partir de la ruta de un archivo que recibe por parametro. DEvuelve el puntero al protagonista creado
+ */
 personaje_t* protagonista_crear(char ruta[MAX_RUTA]);
+
+/*
+ * Solicita la ruta del archivo protagonista, para luego crearlo y finalmente agregarlo a la estructura juego_t. 
+ * Devuelve 0 en caso de exito y -1 en caso de error.
+ */
+int agregar_personaje(juego_t* juego);
 
 /*
  * Recibe un pokemon y se encarga de liberarlo.
@@ -50,6 +68,7 @@ void pokemon_destruir(pokemon_t* pokemon);
  * Recibe un personaje protagonista (NO ENTRENADOR) y se encarga de liberar toda la memoria que utiliza.
  */
 void protagonista_destruir(personaje_t* personaje);
+
 
 /*
  * Recibe un gimnasio y libera la memoria que utiliza.
@@ -66,5 +85,14 @@ void entrenador_destruir(entrenador_t* entrenador);
  */
 void entrenadores_destruir(lista_t* lista_entrenadores);
 
+/*
+ * Recibe un gimnasio y muestra a su lider, entrenadores y pokemones.
+ */
+void gimnasio_mostrar(gimnasio_t* gimnasio);
 
-#endif /* __JUEGO_H__ */
+/*
+ * Recibe un personaje y muestra sus datos y pokemones.
+ */
+void protagonista_mostrar(personaje_t* protagonista);
+
+#endif /* GIMNASIOS_Y_PROTAGONISTA */
