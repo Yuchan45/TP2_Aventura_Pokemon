@@ -27,11 +27,9 @@ typedef struct pokemon{
  */
 void mejorar_pokemon(pokemon_t* pokemon);
 
-int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival);
+void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2);
 
-
-
-
+bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon);
 
 
 

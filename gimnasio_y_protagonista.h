@@ -107,10 +107,15 @@ bool mostrar_pokemon(void* pokemon, void* contador);
 
 bool mostrar_id_pokemon(void* pokemon, void* contador);
 
-void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2);
-
 void cambio_pokemon(personaje_t* personaje);
 
-bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon);
+
+/*
+ * Recibe la lista de pokemones obtenidos del protagonista y la lista de pokemones del rival. 
+ * Se encarga de preguntar y de tomar prestado el pokemon rival deseado.
+ * Devuelve 0 en caso de exito y -1 en caso de error.
+ */
+int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival);
+
 
 #endif /* GIMNASIO_Y_PROTAGONISTA */

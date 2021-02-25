@@ -419,12 +419,10 @@ void gimnasio_destruir(gimnasio_t* gimnasio){
 }
 
 int insertar_gimnasio(heap_t* heap_gimnasios){
-    char ruta[50] = "Gimnasios/gimnasio_1.txt";
-    /*
+    //char ruta[50] = "Protagonista/protagonista.txt";
     printf("Ingrese la ruta del archivo del gimnasio que desea agregar: ");
     char ruta[MAX_RUTA];
     scanf(" %s", ruta);
-    */
     gimnasio_t* gimnasio = gimnasio_crear(ruta);
     if (!gimnasio) return -1;
     if (heap_insertar_elemento(heap_gimnasios, gimnasio) == 0){
@@ -437,12 +435,10 @@ int insertar_gimnasio(heap_t* heap_gimnasios){
 }
 
 int agregar_personaje(juego_t* juego){
-    char ruta[50] = "Protagonista/protagonista.txt";
-    /*
+    //char ruta[50] = "Protagonista/protagonista.txt";
     printf("Ingrese la ruta del archivo del protagonista que desea cargar: ");
     char ruta[MAX_RUTA];
     scanf(" %s", ruta);
-    */
     personaje_t* protagonista = protagonista_crear(ruta);
     if (!protagonista){
         printf("Error al cargar el protagonista.\n");
@@ -542,21 +538,6 @@ void cargar_tipo_batalla(funcion_batalla* vector){
 }
 
 
-bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon){
-    bool devolver = false;
-    if (lista && pokemon){
-        pokemon_t* pokemon_lista;
-        lista_iterador_t* iterador = lista_iterador_crear(lista);
-        while (lista_iterador_tiene_siguiente(iterador)){
-            pokemon_lista = (pokemon_t*)lista_iterador_elemento_actual(iterador);
-            if (pokemon_lista == pokemon) devolver = true;
-            lista_iterador_avanzar(iterador);
-        }
-        lista_iterador_destruir(iterador);
-    }
-    return devolver;
-}
-
 
 bool mostrar_pokemon(void* pokemon, void* contador){ //Pongo el contador para que no llore nomas.
     if (pokemon)
@@ -568,16 +549,6 @@ bool mostrar_id_pokemon(void* pokemon, void* contador){
     if (pokemon && contador)
         printf("[%-i]   %-20s %-5i  %-5i %-5i %-5i\n", (*(int*)contador)++, ((pokemon_t*)pokemon)->nombre, ((pokemon_t*)pokemon)->velocidad, ((pokemon_t*)pokemon)->ataque, ((pokemon_t*)pokemon)->defensa, ((pokemon_t*)pokemon)->nivel);
     return true;
-}
-
-void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2){
-    if (pkm1 && pkm2){
-        printf("\n%-20s %-5s %-5s %-5s\n", "POKEMON", "VEL", "ATK", "DEF");
-        printf("%-20s %-5i %-5i %-5i \n", pkm1->nombre, pkm1->velocidad, pkm1->ataque, pkm1->defensa);
-        printf("            VS\n");
-        printf("%-20s %-5s %-5s %-5s\n", "POKEMON", "VEL", "ATK", "DEF");
-        printf("%-20s %-5i %-5i %-5i \n\n", pkm2->nombre, pkm2->velocidad, pkm2->ataque, pkm2->defensa);
-    }
 }
 
 
@@ -644,12 +615,35 @@ void cambio_pokemon(personaje_t* personaje){
         cambio_pokemon(personaje);
     return;
     
+}
 
+int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival){
+    //char continuar;
+    int i = 1;
+    printf("\n******¿Que pokemon deseas tomar prestado?******\n\n");
+    printf("%-4s %-20s %-5s %-5s %-5s %-5s\n", " ID", " POKEMON", " VEL", "  ATK", "  DEF", " LVL");
+    lista_con_cada_elemento(pokemones_rival, &mostrar_id_pokemon, (void*)&i);
 
+    printf("\nIngrese el ID del pokemon rival que desee tomar prestado. (0 en caso de no querer ninguno): ");
+    size_t id_rival = 0;
+    scanf(" %lu", &id_rival);
+    while (id_rival > lista_elementos(pokemones_rival)){
+        printf("\nEl numero ingresado sobrepasa el nro de ID de los pokemones en el equipo del rival.\n");
+        printf("\nIngrese el ID del pokemon rival que desee tomar prestado. (0 en caso de no querer ninguno): ");
+        scanf(" %lu", &id_rival);
+    }
+    if (id_rival == 0) return -1;
+    /*
+    if (id_equipo == 0) {
+        printf("Esta a punto de salir del menu de cambio. Presione (C) si desea continuar: ");
+        scanf(" %c", &continuar);
+        if (continuar != 'C') return;
+    }*/ //ME da paja hacer que vuelva a preguntar el id.
 
-
-
-
-
-
+    pokemon_t* pokemon_a_agregar = malloc(sizeof(pokemon_t));
+    if (!pokemon_a_agregar) return -1;
+    *pokemon_a_agregar = *(pokemon_t*)(lista_elemento_en_posicion(pokemones_rival, id_rival -1));
+    lista_insertar(pokemones_obtenidos, pokemon_a_agregar);
+    printf("\n%s ha sido añadido a tu equipo!\n", pokemon_a_agregar->nombre);
+    return 0;
 }
