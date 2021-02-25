@@ -36,7 +36,7 @@ typedef struct juego{
     personaje_t* protagonista;
     heap_t* gimnasios;
     bool simular;
-    //funcion_batalla id_batalla[MAX_BATALLAS]
+    funcion_batalla tipo_batalla[MAX_BATALLAS];
 }juego_t;
 
 /*
@@ -60,6 +60,12 @@ personaje_t* protagonista_crear(char ruta[MAX_RUTA]);
  * Devuelve 0 en caso de exito y -1 en caso de error.
  */
 int agregar_personaje(juego_t* juego);
+
+
+/*
+ * Carga los id de batalla (los tipos de batalla) del batalla.c en el vector recibido.
+ */
+void cargar_tipo_batalla(funcion_batalla id_batalla[MAX_BATALLAS]);
 
 /*
  * Recibe un pokemon y se encarga de liberarlo.
@@ -100,6 +106,8 @@ void protagonista_mostrar(personaje_t* protagonista);
 bool mostrar_pokemon(void* pokemon, void* contador);
 
 bool mostrar_id_pokemon(void* pokemon, void* contador);
+
+void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2);
 
 void cambio_pokemon(personaje_t* personaje);
 

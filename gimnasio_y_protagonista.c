@@ -532,6 +532,16 @@ void protagonista_mostrar(personaje_t* protagonista){
     printf("\n\n");
 }
 
+
+void cargar_tipo_batalla(funcion_batalla* vector){
+    vector[0] = &funcion_batalla_1;
+    vector[1] = &funcion_batalla_2;
+    vector[2] = &funcion_batalla_3;
+    vector[3] = &funcion_batalla_4;
+    vector[4] = &funcion_batalla_5;
+}
+
+
 bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon){
     bool devolver = false;
     if (lista && pokemon){
@@ -559,6 +569,17 @@ bool mostrar_id_pokemon(void* pokemon, void* contador){
         printf("[%-i]   %-20s %-5i  %-5i %-5i %-5i\n", (*(int*)contador)++, ((pokemon_t*)pokemon)->nombre, ((pokemon_t*)pokemon)->velocidad, ((pokemon_t*)pokemon)->ataque, ((pokemon_t*)pokemon)->defensa, ((pokemon_t*)pokemon)->nivel);
     return true;
 }
+
+void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2){
+    if (pkm1 && pkm2){
+        printf("\n%-20s %-5s %-5s %-5s\n", "POKEMON", "VEL", "ATK", "DEF");
+        printf("%-20s %-5i %-5i %-5i \n", pkm1->nombre, pkm1->velocidad, pkm1->ataque, pkm1->defensa);
+        printf("            VS\n");
+        printf("%-20s %-5s %-5s %-5s\n", "POKEMON", "VEL", "ATK", "DEF");
+        printf("%-20s %-5i %-5i %-5i \n\n", pkm2->nombre, pkm2->velocidad, pkm2->ataque, pkm2->defensa);
+    }
+}
+
 
 void cambio_pokemon(personaje_t* personaje){
     if (!personaje) return;
