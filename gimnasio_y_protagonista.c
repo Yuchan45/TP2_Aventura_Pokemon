@@ -425,10 +425,11 @@ int insertar_gimnasio(heap_t* heap_gimnasios){
     gimnasio_t* gimnasio = gimnasio_crear(ruta);
     if (!gimnasio) return -1;
     if (heap_insertar_elemento(heap_gimnasios, gimnasio) == 0){
-        printf("%s ha sido añadido con exitosamente.\n", gimnasio->nombre);
+        printf("El %s ha sido añadido con exitosamente.\n", gimnasio->nombre);
+        gimnasio_mostrar(gimnasio);
         return 0;
     }
-    printf("Error al insertar gimnasio en el heap.\n");
+    printf("Error al insertar gimnasio en el heap.\n\n");
     return -1;
 }
 
@@ -442,6 +443,7 @@ int agregar_personaje(juego_t* juego){
         return -1;
     } 
     juego->protagonista = protagonista;
+    printf("El protagonista ha sido cargado con exito.\n\n");
     return 0;
 }
 
@@ -464,7 +466,7 @@ void gimnasio_mostrar(gimnasio_t* gimnasio){
     if (!gimnasio) return;
     pokemon_t* pokemon;
 
-    printf("GIMNASIO: %s\nLIDER: %s\nDIFICULTAD: %i, TIPO DE COMBATE: %i\n", gimnasio->nombre, gimnasio->lider->nombre, gimnasio->dificultad, gimnasio->puntero_a_combate);
+    printf("GIMNASIO: %s\nLIDER: %s\nDIFICULTAD: %i\n TIPO DE COMBATE: %i\n", gimnasio->nombre, gimnasio->lider->nombre, gimnasio->dificultad, gimnasio->puntero_a_combate);
     
     //LIDER
     lista_iterador_t* iterador = lista_iterador_crear(gimnasio->lider->pokemones);

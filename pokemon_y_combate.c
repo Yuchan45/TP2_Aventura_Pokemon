@@ -11,5 +11,7 @@ void mejorar_pokemon(pokemon_t* pokemon){
     pokemon->ataque++;
     pokemon->velocidad++;
     pokemon->defensa++;
+    
+    pokemon->nivel++; //Le subo el lvl
     printf("Las estadisticas de %s han sido mejoradas!.\n", pokemon->nombre);
 }

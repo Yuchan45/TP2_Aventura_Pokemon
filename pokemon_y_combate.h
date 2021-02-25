@@ -12,7 +12,7 @@
  * Si el ganador es el primer pokemon, se devolvera 1
  * Si el ganador es el segundo pokemon, se devolvera -1
  */
-//typedef int (*funcion_batalla)(void*, void*);
+typedef int (*funcion_batalla)(void*, void*);
 
 typedef struct pokemon{
     char nombre[MAX_NOMBRE];
