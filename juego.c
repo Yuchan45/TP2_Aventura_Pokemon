@@ -1,16 +1,25 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "heap.h"
-#include "juego.h"
+#include "gimnasio_y_protagonista.h"
+
+
 
 #define ENTRENADOR 'E'
 #define ENTRENADOR_MINUSCULA 'e'
-#define GIMNASIO 'A'
-#define GIMNASIO_MINUSCULA 'a'
+#define AGREGAR_GIMNASIO 'A'
+#define AGREGAR_GIMNASIO_MINUSCULA 'a'
 #define INICIAR 'I'
 #define INICIAR_MINUSCULA 'i'
 #define SIMULAR 'S'
 #define SIMULAR_MINUSCULA 's'
+#define INFO_GIMNASIO 'G'
+#define INFO_GIMNASIO_MINUSCULA 'g'
+#define CAMBIAR_PKMN 'C'
+#define CAMBIAR_PKMN_MINUSCULA 'c'
+#define BATALLAR 'B'
+#define BATALLAR_MINUSCULA 'b'
+
 
 
 /*
@@ -53,7 +62,11 @@ int main(){
         return 0;
     } 
 
-    menu_inicio(&juego);
+    agregar_personaje(&juego); //PA AGILIZAR (dsp hay que descomentar el agregar pj y insertar gim)!!
+    insertar_gimnasio(juego.gimnasios); //PA AGILIZAR
+    menu_gimnasio(&juego);
+
+    //menu_inicio(&juego);
     return 0;
 }
 
@@ -73,25 +86,26 @@ void menu_inicio(juego_t* juego){
     printf("\nIngrese uno de los caracteres indicados: ");
     letra = leer_letra();
 
-    bool completo = false;
+    bool datos_completos = false;
     bool caracter_valido = false;
-    while (!completo){
+    while (!datos_completos){
+        caracter_valido = false;
         if ( (letra == ENTRENADOR || letra == ENTRENADOR_MINUSCULA) && !(juego->protagonista) ){
             agregar_personaje(juego);
             caracter_valido = true;
         }
-        if (letra == GIMNASIO || letra == GIMNASIO_MINUSCULA){
+        if (letra == AGREGAR_GIMNASIO || letra == AGREGAR_GIMNASIO_MINUSCULA){
             insertar_gimnasio(juego->gimnasios);
             caracter_valido = true;
         }
         if ( (letra == INICIAR || letra == INICIAR_MINUSCULA || letra == SIMULAR || letra == SIMULAR_MINUSCULA) && juego->protagonista && (heap_elementos(juego->gimnasios) > 0)){
-            if (letra == INICIAR || letra == INICIAR_MINUSCULA) juego->simular = 0;
-            if (letra == SIMULAR || letra == SIMULAR_MINUSCULA) juego->simular = 1;
+            if (letra == INICIAR || letra == INICIAR_MINUSCULA) juego->simular = 0; //false
+            if (letra == SIMULAR || letra == SIMULAR_MINUSCULA) juego->simular = 1; //true
             caracter_valido = true;
-            completo = true;
+            datos_completos = true;
         }
 
-        if (!completo){
+        if (!datos_completos){
             if (!caracter_valido) {
                 printf("\nCaracter invalido, las opciones son:\n");
                 if (!juego->protagonista) printf("(E)--> Ingresar el archivo del protagonista\n");
@@ -128,8 +142,90 @@ void menu_inicio(juego_t* juego){
 
     }
     printf("\n\n\nEMPIEZA LA AVENTURAAA!\n\n\n");
-    //menu_gimnasio(juego);
+    menu_gimnasio(juego);
 }
+
+void menu_gimnasio(juego_t* juego){
+    char letra;
+    gimnasio_t* gimnasio = heap_obtener_raiz(juego->gimnasios);
+
+    printf("\n\n\nBienvenido al %s!!!.\n\n", gimnasio->nombre);
+
+    if (juego->simular){
+        printf("Se realizara la simulacion.\n");
+    }
+    printf("        ¿Que quiere hacer?....\n");
+    printf("\n\n(E)--> Muesta el equipo del protagonista.\n");
+    printf("(G)--> Muesta informacion del gimnasio.\n");
+    printf("(C)--> Cambiar pokemones del equipo.\n");
+    if (lista_vacia(gimnasio->entrenadores)){
+        printf("(B)--> Combatir contra el lider %s\n", gimnasio->lider->nombre);
+    }else{
+        printf("(B)--> Combatir contra el proximo entrenador.\n");
+    }
+
+    printf("\nIngrese uno de los caracteres indicados: ");
+    letra = leer_letra();
+
+    bool fin = false;
+    bool caracter_valido = false;
+    while (!fin){
+        fin = false;
+
+        if (letra == ENTRENADOR || letra == ENTRENADOR_MINUSCULA){
+            protagonista_mostrar(juego->protagonista);
+            caracter_valido = true;
+        }
+        if (letra == INFO_GIMNASIO || letra == INFO_GIMNASIO_MINUSCULA){
+            caracter_valido = true;
+            gimnasio_mostrar(gimnasio);
+        }
+        if (letra == CAMBIAR_PKMN || letra == CAMBIAR_PKMN_MINUSCULA){
+            caracter_valido = true;
+            if (lista_elementos(juego->protagonista->pokemon_obtenidos) > MAX_EQUIPO){
+                //printf("\n%s realizara un cambio de pokemones!\n", juego->protagonista->nombre);
+                //HACER CAMBIO
+                cambio_pokemon(juego->protagonista);
+            }else{
+                printf("No hay pokemones en caja, todos los pokemones que tiene estan en su equipo.\n");
+            }
+        }
+        if (letra == BATALLAR || letra == BATALLAR_MINUSCULA){
+            caracter_valido = true;
+            //batallar
+            fin = true;
+        }
+
+
+
+        if (!fin){
+            if (!caracter_valido) printf("\nCaracter invalido, las opciones son:\n");
+            printf("\n......................................\n");
+            printf("    %s\n", gimnasio->nombre);
+            printf("\n      ¿Que quiere hacer?....\n");
+            printf("\n(E)--> Muesta el equipo del protagonista.\n");
+            printf("(G)--> Muesta informacion del gimnasio.\n");
+            printf("(C)--> Cambiar pokemones del equipo.\n");
+            if (lista_vacia(gimnasio->entrenadores)){
+                printf("(B)--> Combatir contra el lider %s\n", gimnasio->lider->nombre);
+            }else{
+                printf("(B)--> Combatir contra el proximo entrenador.\n");
+            }
+            printf("\nIngrese uno de los caracteres indicados: ");
+            letra = leer_letra();
+        }
+
+
+    }
+
+}
+
+
+
+
+
+
+
 
 char leer_letra(){
     char letra = (char)getchar();

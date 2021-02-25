@@ -42,5 +42,4 @@ int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_riva
 
 
 
-
 #endif /* __POKEMON_Y_COMBATE_H__ */

@@ -97,4 +97,12 @@ void gimnasio_mostrar(gimnasio_t* gimnasio);
  */
 void protagonista_mostrar(personaje_t* protagonista);
 
+bool mostrar_pokemon(void* pokemon, void* contador);
+
+bool mostrar_id_pokemon(void* pokemon, void* contador);
+
+void cambio_pokemon(personaje_t* personaje);
+
+bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon);
+
 #endif /* GIMNASIO_Y_PROTAGONISTA */
