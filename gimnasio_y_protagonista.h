@@ -7,6 +7,14 @@
 #include "pokemon_y_combate.h"
 #include "batallas.h" 
 
+#define AZUL "\033[0;34m"
+#define CYAN "\033[0;36m"
+#define ROJO "\033[0;31m"
+#define VERDE "\033[0;32m"
+#define BLANCO "\033[0;37m"
+#define VIOLETA "\033[0;35m"
+#define AMARILLO "\033[0;33m"
+
 #define MAX_NOMBRE 80
 #define MAX_RUTA 150
 #define MAX_EQUIPO 6
@@ -109,6 +117,7 @@ bool mostrar_id_pokemon(void* pokemon, void* contador);
 
 void cambio_pokemon(personaje_t* personaje);
 
+void tipo_de_combate(gimnasio_t* gimnasio);
 
 /*
  * Recibe la lista de pokemones obtenidos del protagonista y la lista de pokemones del rival. 

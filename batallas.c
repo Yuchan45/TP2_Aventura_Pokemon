@@ -5,7 +5,6 @@
 
 int funcion_batalla_1(void* pkm_1, void* pkm_2){ //Batalla de dureza.
     //if (!pkm_1 || !pkm_2) return;
-    printf("DEFENESSAAAAA\n");
     if( ((pokemon_t*)pkm_1)->defensa >= ((pokemon_t*)pkm_2)->defensa )
         return GANO_PRIMERO;
     return GANO_SEGUNDO;
@@ -13,7 +12,6 @@ int funcion_batalla_1(void* pkm_1, void* pkm_2){ //Batalla de dureza.
 
 int funcion_batalla_2(void* pkm_1, void* pkm_2){ // Batalla de velocidad.
     //if (!pkm_1 || !pkm_2) return;
-    printf("VELOCIDAAAA\n");
     if ( ((pokemon_t*)pkm_1)->velocidad >= ((pokemon_t*)pkm_2)->velocidad )
         return GANO_PRIMERO;
     return GANO_SEGUNDO;
@@ -21,7 +19,6 @@ int funcion_batalla_2(void* pkm_1, void* pkm_2){ // Batalla de velocidad.
 
 int funcion_batalla_3(void* pkm_1, void* pkm_2){ //Batalla de ataque.
     //if (!pkm_1 || !pkm_2) return;
-    printf("ATAQUEEE\n");
     if ( ((pokemon_t*)pkm_1)->ataque >= ((pokemon_t*)pkm_2)->ataque )
         return GANO_PRIMERO;
     return GANO_SEGUNDO;
@@ -29,7 +26,6 @@ int funcion_batalla_3(void* pkm_1, void* pkm_2){ //Batalla de ataque.
 
 int funcion_batalla_4(void* pkm_1, void* pkm_2){ //Batalla tiene mas stats generales (Suma de todas las estadisticas).
     //if (!pkm_1 || !pkm_2) return;
-    printf("GENERAL\n");
     int stats_pokemon_1 = ((pokemon_t*)pkm_1)->velocidad + ((pokemon_t*)pkm_1)->ataque + ((pokemon_t*)pkm_1)->defensa;
     int stats_pokemon_2 = ((pokemon_t*)pkm_2)->velocidad + ((pokemon_t*)pkm_2)->ataque + ((pokemon_t*)pkm_2)->defensa;
 
@@ -39,7 +35,6 @@ int funcion_batalla_4(void* pkm_1, void* pkm_2){ //Batalla tiene mas stats gener
 }
 
 int funcion_batalla_5(void* pkm_1, void* pkm_2){ //Batalla largo de nombre(?).
-printf("NOMBRE\n");
     //if (!pkm_1 || !pkm_2) return;
     size_t largo_pk1 = strlen(((pokemon_t*)pkm_1)->nombre);
     size_t largo_pk2 = strlen(((pokemon_t*)pkm_2)->nombre);
