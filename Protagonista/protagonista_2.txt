@@ -1,0 +1,5 @@
+E;Mari
+P;Meganium;100;100;100
+P;Pidgeot;100;100;100
+P;Blastoise;100;100;100
+P;Gyarados;100;100;100

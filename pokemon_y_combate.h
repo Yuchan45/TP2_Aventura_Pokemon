@@ -30,12 +30,19 @@ typedef struct pokemon{
 }pokemon_t;
 
 /*
- * Recibe un pokemon y en caso de poder, le mejora las estadisticas. En caso de no poder, noa hce nada.
+ * Recibe un pokemon y en caso de poder, le mejora las estadisticas. En caso de no poder, no se hace nada.
  */
 void mejorar_pokemon(pokemon_t* pokemon);
 
+/*
+ * Recibe dos pokemones y se encarfa de mostrar sus datos. Simulando la pelea.
+ */
 void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2);
 
+/*
+ * Se fija si el pokemon recibido por parametro se encuentra en la lista que 
+ * tambien se le pasa por paramentro.
+ */
 bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon);
 
 

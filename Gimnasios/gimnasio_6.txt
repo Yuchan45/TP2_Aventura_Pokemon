@@ -1,0 +1,17 @@
+G;Gimnasio de Ciudad Azafran;6;5
+L;Sabrina
+P;Kadabra;30;40;60
+P;Venomoth;20;30;40
+P;Mr.Mime;30;40;60
+P;Alakazam;20;30;40
+E;Medium Ruth
+P;Drowzee;20;30;40
+P;Hypno;20;30;40
+P;Slowbro;20;30;40
+E;Montañero Belino
+P;Kadabra;35;30;30
+P;Graveler;20;25;30
+E;Medium Dora
+P;Slowbro;35;30;30
+P;Slowpoke;20;25;30
+P;Mr.Mime;20;25;30

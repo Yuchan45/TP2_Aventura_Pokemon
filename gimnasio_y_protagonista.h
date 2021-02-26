@@ -23,13 +23,13 @@
 
 typedef struct personaje{
     char nombre[MAX_NOMBRE];
-    lista_t* pokemon_para_combatir;
-    lista_t* pokemon_obtenidos;
+    lista_t* pokemon_para_combatir; //lista
+    lista_t* pokemon_obtenidos; //lista
 }personaje_t;
 
 typedef struct entrenador{
     char nombre[MAX_NOMBRE];
-    lista_t* pokemones;
+    lista_t* pokemones; //lista
 }entrenador_t;
 
 typedef struct gimnasio{
@@ -42,21 +42,20 @@ typedef struct gimnasio{
 
 typedef struct juego{
     personaje_t* protagonista;
-    heap_t* gimnasios;
+    heap_t* gimnasios; //heap
     bool simular;
     funcion_batalla tipo_batalla[MAX_BATALLAS];
 }juego_t;
 
 /*
- * Crea un gimnasio a partir de la ruta de un archivo que recibe por parametro. DEvuelve el puntero al gimnasio creado
+ * Crea gimnasios a partir de la ruta de un archivo que recibe por parametro. Puede recibir un gimnasio por archivo como varios dentro del mismo.
  */
-gimnasio_t* gimnasio_crear(char ruta[MAX_RUTA]);
+void gimnasio_crear(char ruta[MAX_RUTA], FILE* archivo_gimnasio, heap_t* heap_gimnasios);
 
 /*
- * Solicita la ruta del archivo gimnasio, para luego crearlo junto con la funcion gimnasio_crear(). 
- * Y luego lo inserta un gimnasio en un heap recibido por parametro.
+ * Solicita mediante un print la ruta del archivo de gimnasios. Recibe por parametro el arbol heap en donde se almacenaran los gimnasios.
  */
-int insertar_gimnasio(heap_t* heap_gimnasios);
+void insertar_gimnasio(heap_t* heap_gimnasios);
 
 /*
  * Crea un protagonista a partir de la ruta de un archivo que recibe por parametro. DEvuelve el puntero al protagonista creado
@@ -68,7 +67,6 @@ personaje_t* protagonista_crear(char ruta[MAX_RUTA]);
  * Devuelve 0 en caso de exito y -1 en caso de error.
  */
 int agregar_personaje(juego_t* juego);
-
 
 /*
  * Carga los id de batalla (los tipos de batalla) del batalla.c en el vector recibido.
@@ -111,12 +109,25 @@ void gimnasio_mostrar(gimnasio_t* gimnasio);
  */
 void protagonista_mostrar(personaje_t* protagonista);
 
+/*
+ * Muestra los pokemones.
+ */
 bool mostrar_pokemon(void* pokemon, void* contador);
 
+/*
+ * Muestra los pokemones con id.
+ */
 bool mostrar_id_pokemon(void* pokemon, void* contador);
 
+/*
+ * Recibe el protagonista y se encarga de hacer una interfaz mediante la cual el usuario
+ * pueda cambiar pokemones entre el equipo y los obtenidos
+ */
 void cambio_pokemon(personaje_t* personaje);
 
+/*
+ * Muestra por pantalla el tipo de combate que realiza dicho gimnasio.
+ */
 void tipo_de_combate(gimnasio_t* gimnasio);
 
 /*

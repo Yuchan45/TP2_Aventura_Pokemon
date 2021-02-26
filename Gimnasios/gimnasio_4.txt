@@ -1,0 +1,12 @@
+G;Gimnasio de Ciudad Azulona;4;3
+L;Erika
+P;Victreebel;30;40;60
+P;Tangela;20;30;40
+P;Vileplume;30;40;60
+E;Chica Chelo
+P;Gloom;35;30;30
+P;Skiploom;20;25;30
+P;Exeggutor;20;25;30
+E;Dominguera Tania
+P;Paras;35;30;30
+P;Parasect;20;25;30

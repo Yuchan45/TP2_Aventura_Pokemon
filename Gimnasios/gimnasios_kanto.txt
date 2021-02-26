@@ -1,4 +1,4 @@
-G;Gimnasio de Ciudad Plateada;2;2
+G;Gimnasio de Ciudad Plateada;1;1
 L;Brock
 P;Onix;30;40;60
 P;Geodude;20;30;40
@@ -6,7 +6,8 @@ E;Campista Jordan
 P;Sandshrew;20;30;40
 E;Montañero Belino
 P;Digglet;35;30;30
-P;Geodude;20;25;3G;Gimnasio de Ciudad Celeste;1;1
+P;Geodude;20;25;30
+G;Gimnasio de Ciudad Celeste;2;2
 L;Misty
 P;Staryu;50;40;30
 P;Starmie;80;60;60
@@ -15,3 +16,104 @@ P;Goldeen;30;40;20
 E;Nadador Luis
 P;Horsea;35;30;20
 P;Shellder;20;25;40
+G;Gimnasio de Ciudad Carmin;3;3
+L;Lt.Surge
+P;Voltorb;30;40;60
+P;Pikachu;20;30;40
+P;Raichu;100;80;100
+E;Mecanico Manolo
+P;Magneton;20;30;40
+E;Marinero Dimas
+P;Pikachu;35;30;30
+P;Voltorb;20;25;30
+E;Caballero Tito
+P;Pikachu;35;30;30
+P;Jolteon;20;25;30
+G;Gimnasio de Ciudad Verde;8;4
+L;Giovanni
+P;Rhyhorn;30;40;60
+P;Digglet;20;30;40
+P;Nidoking;30;40;60
+P;Nidoqueen;20;30;40
+P;Rhydon;30;40;60
+E;Entrenador Guay Yuuji
+P;Machamp;20;30;40
+P;Graveler;20;30;40
+P;Steelix;20;30;40
+E;Entrenador Guay Valerio
+P;Marowak;35;30;30
+P;Rhyhorn;20;25;30
+P;Nidorina;35;30;30
+P;Cubone;20;25;30
+E;Karateka Takashi
+P;Machoke;35;30;30
+P;Machop;20;25;30
+P;Arbok;35;30;30
+E;Domador Camilo
+P;Tauros;35;30;30
+P;Arbok;35;30;30
+G;Gimnasio de Ciudad Azafran;6;5
+L;Sabrina
+P;Kadabra;30;40;60
+P;Venomoth;20;30;40
+P;Mr.Mime;30;40;60
+P;Alakazam;20;30;40
+E;Medium Ruth
+P;Drowzee;20;30;40
+P;Hypno;20;30;40
+P;Slowbro;20;30;40
+E;Montañero Belino
+P;Kadabra;35;30;30
+P;Graveler;20;25;30
+E;Medium Dora
+P;Slowbro;35;30;30
+P;Slowpoke;20;25;30
+P;Mr.Mime;20;25;30
+G;Gimnasio de Isla Canela;7;4
+L;Blaine
+P;Growlithe;30;40;60
+P;Ponyta;20;30;40
+P;Rapidash;30;40;60
+P;Arcanine;20;30;40
+E;Supernecio Enrique
+P;Ninetails;20;30;40
+P;Charmeleon;20;30;40
+P;Rapidash;20;30;40
+P;Vulpix;20;30;40
+E;Supernecio Avero
+P;Growlithe;20;30;40
+P;Charmeleon;20;30;40
+P;Charmander;20;30;40
+P;Arcanine;20;30;40
+E;Cientifico Alejandro
+P;Growlithe;20;30;40
+P;Vulpix;20;30;40
+P;Arcanine;20;30;40
+G;Gimnasio de Ciudad Fucsia;5;3
+L;Koga
+P;Koffing;30;40;60
+P;Koffing;20;30;40
+P;Muk;30;40;60
+P;Weezing;20;30;40
+E;Campista Benito
+P;Nidoking;20;30;40
+P;Nidoqueen;20;30;40
+E;Chica linda
+P;Yvysaur;35;30;30
+P;Venasaur;20;25;30
+P;Bulbasaur;20;25;30
+E;Chica Alicia
+P;Gloom;35;30;30
+P;Arbok;20;25;30
+G;Gimnasio de Ciudad Azulona;4;3
+L;Erika
+P;Victreebel;30;40;60
+P;Tangela;20;30;40
+P;Vileplume;30;40;60
+E;Chica Chelo
+P;Gloom;35;30;30
+P;Skiploom;20;25;30
+P;Exeggutor;20;25;30
+E;Dominguera Tania
+P;Paras;35;30;30
+P;Parasect;20;25;30

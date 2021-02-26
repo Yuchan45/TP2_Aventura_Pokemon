@@ -1,0 +1,16 @@
+G;Gimnasio de Ciudad Fucsia;5;3
+L;Koga
+P;Koffing;30;40;60
+P;Koffing;20;30;40
+P;Muk;30;40;60
+P;Weezing;20;30;40
+E;Campista Benito
+P;Nidoking;20;30;40
+P;Nidoqueen;20;30;40
+E;Chica linda
+P;Yvysaur;35;30;30
+P;Venasaur;20;25;30
+P;Bulbasaur;20;25;30
+E;Chica Alicia
+P;Gloom;35;30;30
+P;Arbok;20;25;30

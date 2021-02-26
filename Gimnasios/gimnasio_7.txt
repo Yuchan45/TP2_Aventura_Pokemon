@@ -1,0 +1,20 @@
+G;Gimnasio de Isla Canela;7;4
+L;Blaine
+P;Growlithe;30;40;60
+P;Ponyta;20;30;40
+P;Rapidash;30;40;60
+P;Arcanine;20;30;40
+E;Supernecio Enrique
+P;Ninetails;20;30;40
+P;Charmeleon;20;30;40
+P;Rapidash;20;30;40
+P;Vulpix;20;30;40
+E;Supernecio Avero
+P;Growlithe;20;30;40
+P;Charmeleon;20;30;40
+P;Charmander;20;30;40
+P;Arcanine;20;30;40
+E;Cientifico Alejandro
+P;Growlithe;20;30;40
+P;Vulpix;20;30;40
+P;Arcanine;20;30;40

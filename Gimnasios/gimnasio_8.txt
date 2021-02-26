@@ -1,0 +1,23 @@
+G;Gimnasio de Ciudad Verde;8;4
+L;Giovanni
+P;Rhyhorn;30;40;60
+P;Digglet;20;30;40
+P;Nidoking;30;40;60
+P;Nidoqueen;20;30;40
+P;Rhydon;30;40;60
+E;Entrenador Guay Yuuji
+P;Machamp;20;30;40
+P;Graveler;20;30;40
+P;Steelix;20;30;40
+E;Entrenador Guay Valerio
+P;Marowak;35;30;30
+P;Rhyhorn;20;25;30
+P;Nidorina;35;30;30
+P;Cubone;20;25;30
+E;Karateka Takashi
+P;Machoke;35;30;30
+P;Machop;20;25;30
+P;Arbok;35;30;30
+E;Domador Camilo
+P;Tauros;35;30;30
+P;Arbok;35;30;30

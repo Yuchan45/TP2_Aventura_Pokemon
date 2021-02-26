@@ -59,36 +59,34 @@ void destructor_de_gimnasio(void* gimnasio){
 }
 char leer_letra();
 /*
-*   imprime el menu inicial del juego.
-*/
+ *   Muestra el menu inicial del juego.
+ */
 void menu_inicio(juego_t* juego);
-
+/*
+ *   Muestra el menu de gimnasio.
+ */
 void menu_gimnasio(juego_t* juego);
-
+/*
+ *   Muestra el menu de victoria.
+ */
 void menu_victoria(juego_t* juego);
-
+/*
+ *   Muestra el menu de derrota.
+ */
 void menu_derrota(juego_t* juego);
-
+/*
+ *  Muestra un menu de combate y los detalles de este.
+ */
 void combate_pokemon(juego_t* juego);
-
+/*
+ *   Imprime el tipo de combate de dicho gimnasio.
+ */
 void tipo_de_combate_gimnasio(juego_t* juego);
-
+/*
+ *   Muestra por consola un ascii art de MAESTRO POKEMON.
+ */
 void eres_maestro_pokemon(juego_t* juego);
 
-//DSP BORRAR
-/*
-int insertar_gimnasio_2(heap_t* heap_gimnasios){
-    char ruta[50] = "Gimnasios/gimnasio_2.txt";
-    gimnasio_t* gimnasio = gimnasio_crear(ruta);
-    if (!gimnasio) return -1;
-    if (heap_insertar_elemento(heap_gimnasios, gimnasio) == 0){
-        printf("El %s ha sido añadido con exitosamente.\n", gimnasio->nombre);
-        //gimnasio_mostrar(gimnasio);
-        return 0;
-    }
-    printf("Error al insertar gimnasio en el heap.\n\n");
-    return -1;
-}*/
 
 int main(){
     juego_t juego;
@@ -101,12 +99,11 @@ int main(){
         return 0;
     } 
 
-    agregar_personaje(&juego); //PA AGILIZAR (dsp hay que descomentar el agregar pj y insertar gim)!!
-    insertar_gimnasio(juego.gimnasios); //PA AGILIZAR
-    //insertar_gimnasio_2(juego.gimnasios); //PA AGILIZAR
-    menu_gimnasio(&juego);
+    //agregar_personaje(&juego); //PA AGILIZAR (dsp hay que descomentar el agregar pj y insertar gim)!!
+    //insertar_gimnasio(juego.gimnasios); //PA AGILIZAR
+    //menu_gimnasio(&juego);
 
-    //menu_inicio(&juego);
+    menu_inicio(&juego);
     return 0;
 }
 
@@ -116,7 +113,7 @@ void menu_inicio(juego_t* juego){
     printf("\n¡Te doy la bienvenida al "AMARILLO"mundo Pokemon"BLANCO"!\n  ¡Preparate para una gran aventura!\n\n");
 
     printf(""VERDE"(E)"BLANCO"--> Ingresar el archivo del protagonista\n");
-    printf(""VERDE"(A)"BLANCO"--> Agregar un gimnasio pokemon\n");
+    printf(""VERDE"(A)"BLANCO"--> Agregar gimnasio/s pokemon\n");
     //if (juego->protagonista && heap_elementos(juego->gimnasios) > 0){
         printf(""ROJO"(I)--> Comienza la partida."BLANCO"\n");
         printf(""ROJO"(S)--> Comienza la partida en modo SIMULACION"BLANCO"\n");
@@ -139,8 +136,8 @@ void menu_inicio(juego_t* juego){
             caracter_valido = true;
         }
         if ( (letra == INICIAR || letra == INICIAR_MINUSCULA || letra == SIMULAR || letra == SIMULAR_MINUSCULA) && juego->protagonista && (heap_elementos(juego->gimnasios) > 0)){
-            if (letra == INICIAR || letra == INICIAR_MINUSCULA) juego->simular = 0; //false
-            if (letra == SIMULAR || letra == SIMULAR_MINUSCULA) juego->simular = 1; //true
+            if (letra == INICIAR || letra == INICIAR_MINUSCULA) juego->simular = false; 
+            if (letra == SIMULAR || letra == SIMULAR_MINUSCULA) juego->simular = true; 
             caracter_valido = true;
             datos_completos = true;
         }
@@ -149,7 +146,7 @@ void menu_inicio(juego_t* juego){
             if (!caracter_valido) {
                 printf("\n"VERDE" *"BLANCO"Caracter invalido, las opciones son:\n");
                 if (!juego->protagonista) printf(""VERDE"(E)"BLANCO"--> Ingresar el archivo del protagonista\n");
-                printf(""VERDE"(A)"BLANCO"--> Agregar un gimnasio pokemon\n"); //Para que pueda agregar otro gimnasio si quiere.
+                printf(""VERDE"(A)"BLANCO"--> Agregar gimnasio/s pokemon\n"); //Para que pueda agregar otro gimnasio si quiere.
                 if (juego->protagonista && heap_elementos(juego->gimnasios) > 0){
                     printf(""VERDE"(I)"BLANCO"--> Comienza la partida\n");
                     printf(""VERDE"(S)"BLANCO"--> Comienza la partida en modo SIMULACION\n");
@@ -162,7 +159,7 @@ void menu_inicio(juego_t* juego){
                 if(!(juego->protagonista) && heap_elementos(juego->gimnasios) == 0){
                     printf("\n"VERDE" *"BLANCO"Para iniciar la partida es necesario cargar un personaje y al menos un gimnasio."VERDE"* "BLANCO"\n");
                     printf(""VERDE"(E)"BLANCO"--> Ingresar el archivo del protagonista\n");
-                    printf(""VERDE"(A)"BLANCO"--> Agregar un gimnasio pokemon\n");
+                    printf(""VERDE"(A)"BLANCO"--> Agregar gimnasio/s pokemon\n");
                     printf(""ROJO"(I)--> Comienza la partida"BLANCO"\n");
                     printf(""ROJO"(S)--> Comienza la partida en modo SIMULACION"BLANCO"\n");
                     printf("\n"ROJO"NOTA"BLANCO": Para iniciar la partida, primero se debe ingresar el personaje y al menos 1 gimnasio.\n");
@@ -170,19 +167,20 @@ void menu_inicio(juego_t* juego){
                 else if(!(juego->protagonista)){
                     printf("\n"VERDE" *"BLANCO"Para iniciar la partida necesita cargar un protagonista."VERDE"* "BLANCO"\n");
                     printf(""VERDE"(E)"BLANCO"--> Ingresar el archivo del protagonista\n");
-                    printf(""VERDE"(A)"BLANCO"--> Agregar un gimnasio pokemon\n");
+                    printf(""VERDE"(A)"BLANCO"--> Agregar gimnasio/s pokemon\n");
                     printf(""ROJO"(I)--> Comienza la partida"BLANCO"\n");
                     printf(""ROJO"(S)--> Comienza la partida en modo SIMULACION"BLANCO"\n");
                     printf("\n"ROJO"NOTA"BLANCO": Para iniciar la partida, primero se debe ingresar el personaje y al menos 1 gimnasio.\n");
                 }
                 else if(heap_elementos(juego->gimnasios) == 0){
                     printf("\n"VERDE" *"BLANCO"Para iniciar la partida necesita cargar al menos un gimnasio."VERDE"* "BLANCO"\n");
-                    printf(""VERDE"(A)"BLANCO"--> Agregar un gimnasio pokemon\n");
+                    printf(""VERDE"(A)"BLANCO"--> Agregar gimnasio/s pokemon\n");
                     printf(""ROJO"(I)--> Comienza la partida"BLANCO"\n");
                     printf(""ROJO"(S)--> Comienza la partida en modo SIMULACION"BLANCO"\n");
                     printf("\n"ROJO"NOTA"BLANCO": Para iniciar la partida, primero se debe ingresar el personaje y al menos 1 gimnasio.\n");
                 }
                 if ((juego->protagonista) && heap_elementos(juego->gimnasios) > 0){ //Recien cuando tenga prota y gym, puedo empezar.
+                    printf("\n...........................................\n");
                     printf(""VERDE"(A)"BLANCO"--> Agregar otro gimnasio pokemon\n");
                     printf(""VERDE"(I)"BLANCO"--> Comenzar la partida\n");
                     printf(""VERDE"(S)"BLANCO"--> Comenzar la partida en modo SIMULACION\n");
@@ -194,20 +192,35 @@ void menu_inicio(juego_t* juego){
         }
 
     }
-    printf("\n\n        "AMARILLO"¡QUE COMIENCE LA AVENTURA!"BLANCO"\n");
+    printf("\n\n"AMARILLO"");
+    printf(" ██████╗ ██╗   ██╗███████╗     ██████╗ ██████╗ ███╗   ███╗██╗███████╗███╗   ██╗ ██████╗███████╗\n");
+    printf("██╔═══██╗██║   ██║██╔════╝    ██╔════╝██╔═══██╗████╗ ████║██║██╔════╝████╗  ██║██╔════╝██╔════╝\n");
+    printf("██║   ██║██║   ██║█████╗      ██║     ██║   ██║██╔████╔██║██║█████╗  ██╔██╗ ██║██║     █████╗  \n");
+    printf("██║▄▄ ██║██║   ██║██╔══╝      ██║     ██║   ██║██║╚██╔╝██║██║██╔══╝  ██║╚██╗██║██║     ██╔══╝  \n");
+    printf("╚██████╔╝╚██████╔╝███████╗    ╚██████╗╚██████╔╝██║ ╚═╝ ██║██║███████╗██║ ╚████║╚██████╗███████╗\n");
+    printf(" ╚══▀▀═╝  ╚═════╝ ╚══════╝     ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝\n");
+    printf("\n");
+    printf("██╗      █████╗      █████╗ ██╗   ██╗███████╗███╗   ██╗████████╗██╗   ██╗██████╗  █████╗ ██╗   \n");
+    printf("██║     ██╔══██╗    ██╔══██╗██║   ██║██╔════╝████╗  ██║╚══██╔══╝██║   ██║██╔══██╗██╔══██╗██║   \n");
+    printf("██║     ███████║    ███████║██║   ██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║██████╔╝███████║██║   \n");
+    printf("██║     ██╔══██║    ██╔══██║╚██╗ ██╔╝██╔══╝  ██║╚██╗██║   ██║   ██║   ██║██╔══██╗██╔══██║╚═╝  \n");
+    printf("███████╗██║  ██║    ██║  ██║ ╚████╔╝ ███████╗██║ ╚████║   ██║   ╚██████╔╝██║  ██║██║  ██║██╗  \n");
+    printf("╚══════╝╚═╝  ╚═╝    ╚═╝  ╚═╝  ╚═══╝  ╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  \n"BLANCO"");
+    //printf("\n\n            "AMARILLO"¡QUE COMIENCE LA AVENTURA!"BLANCO"\n");
     menu_gimnasio(juego);
 }
 
 void menu_gimnasio(juego_t* juego){
     char letra;
     gimnasio_t* gimnasio = heap_obtener_raiz(juego->gimnasios);
-
+    
     printf("\n\n        Bienvenido al "AMARILLO"%s"BLANCO"!!\n", gimnasio->nombre);
     tipo_de_combate_gimnasio(juego);
 
     if (juego->simular){
         printf(""VERDE"Se realizara la simulacion."BLANCO"\n");
         combate_pokemon(juego);
+        return;
     }
     printf("\n"AMARILLO"¿Que quiere hacer?...."BLANCO"\n");
     printf("\n"VERDE"(E)"BLANCO"--> Ver tu equipo PKMN.\n");
@@ -239,7 +252,7 @@ void menu_gimnasio(juego_t* juego){
             if (lista_elementos(juego->protagonista->pokemon_obtenidos) > MAX_EQUIPO){
                 cambio_pokemon(juego->protagonista);
             }else{
-                printf(""VERDE" * "BLANCO"No hay pokemones en caja, todos los pokemones que tienes estan en su equipo."VERDE" * "BLANCO"\n");
+                printf("\n"VERDE" * "ROJO"No hay pokemones en caja, todos los pokemones que tienes estan en su equipo."VERDE" * "BLANCO"\n");
             }
             caracter_valido = true;
         }
@@ -308,7 +321,7 @@ void combate_pokemon(juego_t* juego){
             mejorar_pokemon(lista_iterador_elemento_actual(it_pokemon_protagonista));
             lista_iterador_avanzar(it_pokemon_rival); //Avanzo la del q perdio.
         } else{
-            printf(""ROJO"%s"BLANCO" ha derrotado a tu querido "CYAN"%s"BLANCO"\n", ((pokemon_t*)lista_iterador_elemento_actual(it_pokemon_rival))->nombre, ((pokemon_t*)lista_iterador_elemento_actual(it_pokemon_protagonista))->nombre);
+            printf("\n- OH NO! "ROJO"%s"BLANCO" ha derrotado a tu querido "CYAN"%s"BLANCO"\n", ((pokemon_t*)lista_iterador_elemento_actual(it_pokemon_rival))->nombre, ((pokemon_t*)lista_iterador_elemento_actual(it_pokemon_protagonista))->nombre);
             lista_iterador_avanzar(it_pokemon_protagonista);
             //printf("Tu siguiente pokemon es %s\n", ((pokemon_t*)lista_iterador_elemento_actual(it_pokemon_protagonista))->nombre);
         }
@@ -323,14 +336,13 @@ void combate_pokemon(juego_t* juego){
             printf(""ROJO"%s"BLANCO": ¡Has mostrado tu valia al vencerme!\n"ROJO"%s"BLANCO": Como lider del "AMARILLO"%s"BLANCO" te otorgo la medalla de "AZUL"%s"BLANCO"\n\n", gimnasio->lider->nombre, gimnasio->lider->nombre, gimnasio->nombre, gimnasio->lider->nombre);
             menu_victoria(juego);
             return;
-        } else{
-            /*Hay q eliminar a los entrenadores vencidos para que no vuelvan a aparecer*/
-            printf(""VERDE" * "BLANCO"Haz vencido al entrenador "ROJO"%s"VERDE" * "BLANCO"\n", rival->nombre);
-            entrenador_destruir(rival);
-            lista_desapilar(gimnasio->entrenadores);
-            printf(""AMARILLO"¡Preparate que comienza el combate contra el siguiente entrenador!"BLANCO"\n");
-            combate_pokemon(juego);
         }
+        /*Hay q eliminar a los entrenadores vencidos para que no vuelvan a aparecer*/
+        printf(""VERDE" * "BLANCO"Haz vencido al entrenador "ROJO"%s"VERDE" * "BLANCO"\n", rival->nombre);
+        entrenador_destruir(rival);
+        lista_desapilar(gimnasio->entrenadores);
+        printf(""AMARILLO"¡Preparate que comienza el combate contra el siguiente entrenador!"BLANCO"\n");
+        combate_pokemon(juego);
     }else{
         //printf(""ROJO"Has sido vencido por %s :(\n", rival->nombre);
         //printf(""ROJO"QUE LASTIMA! HAS ESTADO MUY CERCA.\n");
@@ -355,9 +367,9 @@ void menu_victoria(juego_t* juego){
     if (juego->simular){
         heap_eliminar_raiz(juego->gimnasios);
         if (heap_elementos(juego->gimnasios) == 0){
-            printf("SOS UN KPO MAESTRO POKEMON BRO.\n");
-            //MENU_MAESTRO POKEMON
+            //printf("SOS UN KPO MAESTRO POKEMON BRO.\n");
             eres_maestro_pokemon(juego);
+            return;
         }else{
             menu_gimnasio(juego);
         }
@@ -367,12 +379,12 @@ void menu_victoria(juego_t* juego){
     char letra;
     bool tomar_prestado = false;
 
-    if (!tomar_prestado) printf("(T)--> Tomar prestado un pokemon de %s\n", gimnasio->lider->nombre);
-    printf("(C)--> Cambiar pokemones del equipo.\n");
-    printf("(N)--> Ir al proximo gimnasio.\n");
+    if (!tomar_prestado) printf(""VERDE"(T)"BLANCO"--> Tomar prestado un pokemon de %s\n", gimnasio->lider->nombre);
+    printf(""VERDE"(C)"BLANCO"--> Cambiar pokemones del equipo.\n");
+    printf(""VERDE"(N)"BLANCO"--> Ir al proximo gimnasio.\n");
     
 
-    printf("\nIngrese uno de los caracteres indicados: ");
+    printf(""AMARILLO"\nIngrese uno de los caracteres indicados: "BLANCO"");
     letra = leer_letra();
 
     bool fin = false;
@@ -390,7 +402,7 @@ void menu_victoria(juego_t* juego){
             if (lista_elementos(juego->protagonista->pokemon_obtenidos) > MAX_EQUIPO){
                 cambio_pokemon(juego->protagonista);
             }else{
-                printf("No hay pokemones en caja, todos los pokemones que tiene estan en su equipo.\n");
+                printf(""ROJO" * "ROJO"No hay pokemones en caja, todos los pokemones que tiene estan en su equipo.\n");
             }
             caracter_valido = true;
         }
@@ -398,8 +410,6 @@ void menu_victoria(juego_t* juego){
             caracter_valido = true;
             heap_eliminar_raiz(juego->gimnasios);
             if (heap_elementos(juego->gimnasios) == 0){
-                printf("ENBTRASTE ACA BRO.\n");
-                //MENU_MAESTRO POKEMON
                 eres_maestro_pokemon(juego);
                 return;
             }else{
@@ -409,13 +419,13 @@ void menu_victoria(juego_t* juego){
         }
 
         if (!fin){
-            if (!caracter_valido) printf("\nCaracter invalido, las opciones son:\n");
+            if (!caracter_valido) printf("\n"VERDE" *"BLANCO"Caracter invalido, las opciones son:\n");
             printf("\n......................................\n");
-            if (!tomar_prestado) printf("(T)--> Tomar prestado un pokemon de %s\n", gimnasio->lider->nombre);
-            printf("(C)--> Cambiar pokemones del equipo.\n");
-            printf("(N)--> Ir al proximo gimnasio.\n");
+            if (!tomar_prestado) printf(""VERDE"(T)"BLANCO"--> Tomar prestado un pokemon de %s\n", gimnasio->lider->nombre);
+            printf(""VERDE"(C)"BLANCO"--> Cambiar pokemones del equipo.\n");
+            printf(""VERDE"(N)"BLANCO"--> Ir al proximo gimnasio.\n");
             
-            printf("\nIngrese uno de los caracteres indicados: ");
+            printf("\n"AMARILLO"Ingrese uno de los caracteres indicados: "BLANCO"");
             letra = leer_letra();
         }
     }
@@ -434,19 +444,20 @@ void menu_derrota(juego_t* juego){
         rival = lista_ultimo(gimnasio->entrenadores);
 
     if (juego->simular){
-        printf("¡Has perdido contra %s!\n", rival->nombre);
-        printf("HASTA AQUI HAS LLEGADO MUCHACHO\nFin de la simulacion....\n");
+        printf("\n"ROJO"¡Has perdido contra el "BLANCO"%s del gimnasio "AMARILLO"%s"BLANCO"\n", rival->nombre, gimnasio->nombre);
+        printf("\n"AMARILLO"HASTA AQUI HAS LLEGADO MUCHACHO!\nFin de la simulacion"BLANCO"....\n\n\n");
         protagonista_destruir(juego->protagonista);
         heap_destruir(juego->gimnasios);
+        return;
     }
 
-    printf("¡Has perdido contra %s!\n", rival->nombre);
-
-    printf("(C)--> Cambiar pokemones del equipo.\n");
-    printf("(R)--> Reintentar el gimnasio.\n");
-    printf("(F)--> Finalizar partida.\n");
+    printf("\n"ROJO"¡Has perdido contra el "BLANCO"%s"ROJO"!"BLANCO"\n", rival->nombre);
+    printf("....................................................\n");
+    printf(""VERDE"(C)"BLANCO"--> Cambiar pokemones del equipo.\n");
+    printf(""VERDE"(R)"BLANCO"--> Reintentar el gimnasio.\n");
+    printf(""VERDE"(F)"BLANCO"--> Finalizar partida.\n");
     
-    printf("\nIngrese uno de los caracteres indicados: ");
+    printf("\n"AMARILLO"Ingrese uno de los caracteres indicados: "BLANCO"");
     letra = leer_letra();
 
     bool fin = false;
@@ -458,7 +469,7 @@ void menu_derrota(juego_t* juego){
             if (lista_elementos(juego->protagonista->pokemon_obtenidos) > MAX_EQUIPO){
                 cambio_pokemon(juego->protagonista);
             }else{
-                printf("No hay pokemones en caja, todos los pokemones que tiene estan en su equipo.\n");
+                printf(""VERDE" * "ROJO"No hay pokemones en caja, todos los pokemones que tiene estan en su equipo."BLANCO"\n");
             }
             caracter_valido = true;
         }
@@ -468,8 +479,8 @@ void menu_derrota(juego_t* juego){
             fin = true;
         }
         if (letra == FINALIZAR || letra == FINALIZAR_MINUSCULA){
-            printf("Uhhh, que lastima. Espero que vuelvas! :)\n");
-            printf("NOS VEMOSS!\n\n\n");
+            printf(""AMARILLO"\nUhhh, que lastima.... Espero que vuelvas! :)"BLANCO"\n");
+            printf(""AMARILLO"NOS VEMOSS!"BLANCO"\n\n\n");
             protagonista_destruir(juego->protagonista);
             heap_destruir(juego->gimnasios);
             caracter_valido = true;
@@ -477,13 +488,13 @@ void menu_derrota(juego_t* juego){
         }
 
         if (!fin){
-            if (!caracter_valido) printf("\nCaracter invalido, las opciones son:\n");
+            if (!caracter_valido) printf("\n"VERDE" *"BLANCO"Caracter invalido, las opciones son:\n");
             printf("\n......................................\n");
-            printf("(C)--> Cambiar pokemones del equipo.\n");
-            printf("(R)--> Reintentar el gimnasio.\n");
-            printf("(F)--> Finalizar partida.\n");
+            printf(""VERDE"(C)"BLANCO"--> Cambiar pokemones del equipo.\n");
+            printf(""VERDE"(R)"BLANCO"--> Reintentar el gimnasio.\n");
+            printf(""VERDE"(F)"BLANCO"--> Finalizar partida.\n");
             
-            printf("\nIngrese uno de los caracteres indicados: ");
+            printf("\n"AMARILLO"Ingrese uno de los caracteres indicados: "BLANCO"");
             letra = leer_letra();
         }
     }
@@ -491,9 +502,13 @@ void menu_derrota(juego_t* juego){
 }
 
 void eres_maestro_pokemon(juego_t* juego){
-    printf("\n*************************************************\n");
-    printf("Felicidades %s! Eres todo un maestro pokemon!\n", juego->protagonista->nombre);
-    printf("*************************************************\n");
+    printf("\n"AMARILLO" Felicidades "BLANCO"%s"AMARILLO"! Ya eres todo un....\n\n", juego->protagonista->nombre);
+    printf(" ███╗   ███╗ █████╗ ███████╗███████╗████████╗██████╗  ██████╗     ██████╗  ██████╗ ██╗  ██╗███████╗███╗   ███╗ ██████╗ ███╗   ██╗██╗\n");
+    printf(" ████╗ ████║██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔═══██╗    ██╔══██╗██╔═══██╗██║ ██╔╝██╔════╝████╗ ████║██╔═══██╗████╗  ██║██║\n");
+    printf(" ██╔████╔██║███████║█████╗  ███████╗   ██║   ██████╔╝██║   ██║    ██████╔╝██║   ██║█████╔╝ █████╗  ██╔████╔██║██║   ██║██╔██╗ ██║██║\n");
+    printf(" ██║╚██╔╝██║██╔══██║██╔══╝  ╚════██║   ██║   ██╔══██╗██║   ██║    ██╔═══╝ ██║   ██║██╔═██╗ ██╔══╝  ██║╚██╔╝██║██║   ██║██║╚██╗██║╚═╝\n");
+    printf(" ██║ ╚═╝ ██║██║  ██║███████╗███████║   ██║   ██║  ██║╚██████╔╝    ██║     ╚██████╔╝██║  ██╗███████╗██║ ╚═╝ ██║╚██████╔╝██║ ╚████║██╗\n");
+    printf(" ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝ ╚═════╝     ╚═╝      ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝     ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝\n"BLANCO"");
 
     protagonista_destruir(juego->protagonista);
     heap_destruir(juego->gimnasios);
@@ -508,7 +523,7 @@ char leer_letra(){
     }
 
     char siguiente_letra = (char)getchar();
-    while (siguiente_letra == -1 || siguiente_letra != '\n'){
+    while (siguiente_letra == -1 && siguiente_letra != '\n'){
         //printf("Deber ser una letra sola. Vuelta a ingresar.\n");
         letra = (char)getchar();
     }
