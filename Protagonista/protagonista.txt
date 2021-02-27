@@ -1,5 +1,5 @@
 E;Yuchan
-P;Typhlosion;100;100;100
+P;Typhlosion;160;160;160
 P;Pidgeotto;100;100;100
 P;Tyranitar;100;100;100
 P;Lapras;100;100;100

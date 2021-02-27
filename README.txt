@@ -86,3 +86,5 @@ Tambien utilice los TDAS implementados para entregas anteriores como el TDA List
 Algunas aclaraciones:
 *En caso de que en un combate peleen dos pokemones con las mismas estadisticas, gana el pokemon del protagonista.
 *En cuanto a la carga del archivo protagonista, en caso de encontrar un dato invalido (por ejemplo que un pokemon tenga mal los datos), se cargara el protagonista con los pokemones que se lograron cargar hasta el momento.
+*En caso de recibir un archivo con varios gimnasios y que alguno de los gimnasios este con un formato incorrecto, el programa cargara todos los gmnasios validos(completos) previos al gimnasio invalido.
+
