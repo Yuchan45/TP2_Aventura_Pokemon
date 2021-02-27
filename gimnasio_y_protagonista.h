@@ -1,6 +1,8 @@
 #ifndef __GIMNASIO_Y_PROTAGONISTA_H__
 #define __GIMNASIO_Y_PROTAGONISTA_H__
 
+#include <stdio.h>
+#include <string.h>
 #include "stdlib.h"
 #include "heap.h"
 #include "lista.h"
@@ -110,16 +112,6 @@ void gimnasio_mostrar(gimnasio_t* gimnasio);
 void protagonista_mostrar(personaje_t* protagonista);
 
 /*
- * Muestra los pokemones.
- */
-bool mostrar_pokemon(void* pokemon, void* contador);
-
-/*
- * Muestra los pokemones con id.
- */
-bool mostrar_id_pokemon(void* pokemon, void* contador);
-
-/*
  * Recibe el protagonista y se encarga de hacer una interfaz mediante la cual el usuario
  * pueda cambiar pokemones entre el equipo y los obtenidos
  */
@@ -130,12 +122,6 @@ void cambio_pokemon(personaje_t* personaje);
  */
 void tipo_de_combate(gimnasio_t* gimnasio);
 
-/*
- * Recibe la lista de pokemones obtenidos del protagonista y la lista de pokemones del rival. 
- * Se encarga de preguntar y de tomar prestado el pokemon rival deseado.
- * Devuelve 0 en caso de exito y -1 en caso de error.
- */
-int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival);
 
 
 #endif /* GIMNASIO_Y_PROTAGONISTA */

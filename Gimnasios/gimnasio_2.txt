@@ -4,7 +4,7 @@ P;Staryu;50;40;30
 P;Starmie;80;60;60
 P;Seadra;90;90;40
 E;Dominguera Diana
-P;Goldeen;30;40;20
+P;Goldeen;130;140;120
 P;Cloyster;20;25;40
 P;Squirtle;40;25;50
 E;Nadador Luis

@@ -1,6 +1,6 @@
-L;Yuchan
+E;Yuchan
 P;Typhlosion;150;150;150
-P;Pidgeotto;90;90;90
+P;Pidgeotto;90;90
 P;Dragonite;100;100;100
 P;Tyranitar;100;100;100
 P;Lapras;90;90;90

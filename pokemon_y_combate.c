@@ -43,3 +43,40 @@ bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon){
     }
     return devolver;
 }
+
+int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival){
+    //char continuar;
+    int i = 1;
+    printf("\n"AMARILLO"******"BLANCO"¿Que pokemon deseas tomar prestado?"AMARILLO"******"BLANCO"\n\n");
+    printf(""VERDE"%-4s"BLANCO" %-20s %-5s %-5s %-5s %-5s\n", "ID", " POKEMON", " VEL", "  ATK", "  DEF", " LVL");
+    lista_con_cada_elemento(pokemones_rival, &mostrar_id_pokemon, (void*)&i);
+
+    printf("\nIngrese el "VERDE"ID"BLANCO" del pokemon rival que desee tomar prestado. (0 en caso de no querer ninguno): ");
+    size_t id_rival = 0;
+    scanf(" %lu", &id_rival);
+    while (id_rival > lista_elementos(pokemones_rival)){
+        printf("\nEl numero ingresado sobrepasa el nro de "VERDE"ID"BLANCO" de los pokemones en el equipo del rival.\n");
+        printf("\nIngrese el "VERDE"ID"BLANCO" del pokemon rival que desee tomar prestado. (0 en caso de no querer ninguno): ");
+        scanf(" %lu", &id_rival);
+    }
+    if (id_rival == 0) return -1;
+
+    pokemon_t* pokemon_a_agregar = malloc(sizeof(pokemon_t));
+    if (!pokemon_a_agregar) return -1;
+    *pokemon_a_agregar = *(pokemon_t*)(lista_elemento_en_posicion(pokemones_rival, id_rival -1));
+    lista_insertar(pokemones_obtenidos, pokemon_a_agregar);
+    printf("\n -"VERDE"%s"BLANCO" ha sido añadido a tu equipo!\n", pokemon_a_agregar->nombre);
+    return 0;
+}
+
+bool mostrar_pokemon(void* pokemon, void* contador){ //Pongo el contador para que no llore nomas.
+    if (pokemon)
+        printf(""CYAN"%-20s"BLANCO" %-5i  %-5i %-5i %-5i\n", ((pokemon_t*)pokemon)->nombre, ((pokemon_t*)pokemon)->velocidad, ((pokemon_t*)pokemon)->ataque, ((pokemon_t*)pokemon)->defensa, ((pokemon_t*)pokemon)->nivel);
+    return true;
+}
+
+bool mostrar_id_pokemon(void* pokemon, void* contador){
+    if (pokemon && contador)
+        printf(""VERDE"[%-i]"BLANCO"   %-20s %-5i  %-5i %-5i %-5i\n", (*(int*)contador)++, ((pokemon_t*)pokemon)->nombre, ((pokemon_t*)pokemon)->velocidad, ((pokemon_t*)pokemon)->ataque, ((pokemon_t*)pokemon)->defensa, ((pokemon_t*)pokemon)->nivel);
+    return true;
+}

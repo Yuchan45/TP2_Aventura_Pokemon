@@ -1,6 +1,7 @@
 #ifndef __POKEMON_Y_COMBATE_H__
 #define __POKEMON_Y_COMBATE_H__
 
+#include <stdlib.h>
 #include <stdbool.h>
 #include "batallas.h"
 #include "lista.h"
@@ -46,12 +47,22 @@ void mostrar_info_combate(pokemon_t* pkm1, pokemon_t* pkm2);
 bool pokemon_en_lista(lista_t* lista, pokemon_t* pokemon);
 
 
+/*
+ * Recibe la lista de pokemones obtenidos del protagonista y la lista de pokemones del rival. 
+ * Se encarga de preguntar y de tomar prestado el pokemon rival deseado.
+ * Devuelve 0 en caso de exito y -1 en caso de error.
+ */
+int tomar_pokemon_prestado(lista_t* pokemones_obtenidos, lista_t* pokemones_rival);
 
+/*
+ * Muestra los pokemones.
+ */
+bool mostrar_pokemon(void* pokemon, void* contador);
 
-
-
-
-
+/*
+ * Muestra los pokemones con id.
+ */
+bool mostrar_id_pokemon(void* pokemon, void* contador);
 
 
 #endif /* __POKEMON_Y_COMBATE_H__ */
